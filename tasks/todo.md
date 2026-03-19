@@ -22,14 +22,14 @@
 
 ## Puzzle quotidien 2026-03-19
 
-- [ ] Choisir une célébrité française et un jeu de mots visuel clair sur le nom de famille
-- [ ] Générer une image raster 400x400 sans texte dans `public/puzzles/2026-03-19.*`
-- [ ] Créer `content/puzzles/2026-03-19.json` avec réponse normalisée
-- [ ] Exécuter `pnpm build` et corriger si nécessaire
-- [ ] Committer et pousser les changements sur la branche de travail
+- [x] Choisir une célébrité française et un jeu de mots visuel clair sur le nom de famille
+- [x] Générer une image raster 400x400 sans texte dans `public/puzzles/2026-03-19.*`
+- [x] Créer `content/puzzles/2026-03-19.json` avec réponse normalisée
+- [x] Exécuter `pnpm build` et corriger si nécessaire
+- [x] Committer et pousser les changements sur la branche de travail
 
 ## Review — puzzle 2026-03-19
 
-- [ ] Date Europe/Paris vérifiée
-- [ ] Fichiers puzzle et image présents
-- [ ] Build validé
+- [x] Date Europe/Paris vérifiée (`2026-03-19`)
+- [x] Fichiers puzzle et image présents (`content/puzzles/2026-03-19.json`, `public/puzzles/2026-03-19.png`)
+- [x] Build validé (`pnpm install && pnpm build`)
