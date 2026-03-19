@@ -33,13 +33,6 @@ export const getTodayPuzzlePublic = createServerFn({ method: 'GET' }).handler(
   },
 )
 
-export const getPuzzlePublicByDate = createServerFn({ method: 'POST' })
-  .inputValidator((d: { date: string }) => d)
-  .handler(async ({ data }): Promise<PuzzlePublic> => {
-    const puzzle = await loadPuzzleFile(data.date)
-    return toPublic(puzzle)
-  })
-
 export const submitGuess = createServerFn({ method: 'POST' })
   .inputValidator((d: { date: string; guess: string }) => d)
   .handler(async ({ data }) => {

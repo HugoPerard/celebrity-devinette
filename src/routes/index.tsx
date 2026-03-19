@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useServerFn } from '@tanstack/react-start'
 import {
   getTodayPuzzlePublic,
@@ -23,14 +23,14 @@ function Home() {
 
   if (!puzzle) {
     return (
-      <main className="page-wrap px-4 pb-12 pt-10">
-        <section className="island-shell rise-in rounded-2xl p-8 text-center">
-          <h1 className="display-title mb-3 text-2xl font-bold text-[var(--sea-ink)]">
+      <main className="page-wrap flex min-h-[60vh] flex-col px-4 pb-12 pt-10">
+        <section className="island-shell rise-in m-auto w-full max-w-lg rounded-2xl p-8 text-center">
+          <h2 className="display-title mb-3 text-2xl font-bold text-[var(--sea-ink)]">
             Aucune devinette pour l’instant
-          </h1>
+          </h2>
           <p className="text-[var(--sea-ink-soft)]">
-            Ajoute un fichier <code>content/puzzles/YYYY-MM-DD.json</code> et
-            l’image associée sous <code>public/puzzles/</code>.
+            Ajoute <code>content/puzzles/YYYY-MM-DD.json</code> et l’image sous{' '}
+            <code>public/puzzles/</code>.
           </p>
         </section>
       </main>
@@ -58,12 +58,11 @@ function Home() {
 
   return (
     <main className="page-wrap px-4 pb-12 pt-10">
-      <section className="island-shell rise-in relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-12">
+      <section className="island-shell rise-in relative mx-auto max-w-lg overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-12">
         <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(79,184,178,0.32),transparent_66%)]" />
-        <p className="island-kicker mb-2">Devinette du jour</p>
-        <p className="mb-6 text-sm text-[var(--sea-ink-soft)]">
-          Fuseau horaire du jeu : <strong>{PUZZLE_TIMEZONE}</strong> — énigme du{' '}
-          <strong>{puzzle.date}</strong>
+        <p className="island-kicker mb-2 text-center">Aujourd’hui</p>
+        <p className="mb-6 text-center text-sm text-[var(--sea-ink-soft)]">
+          {PUZZLE_TIMEZONE} · <strong>{puzzle.date}</strong>
         </p>
         <div className="mx-auto mb-8 max-w-md overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--chip-bg)] shadow-[0_12px_40px_rgba(30,90,72,0.12)]">
           <img
@@ -89,13 +88,6 @@ function Home() {
             <p className="mt-2 text-sm text-[var(--sea-ink-soft)]">
               Reviens demain pour une nouvelle énigme.
             </p>
-            <Link
-              to="/archive/$date"
-              params={{ date: puzzle.date }}
-              className="mt-4 inline-block text-sm font-semibold text-[var(--lagoon-deep)] underline"
-            >
-              Voir cette devinette en archive
-            </Link>
           </div>
         ) : (
           <form
@@ -136,16 +128,6 @@ function Home() {
           </form>
         )}
       </section>
-
-      <p className="mt-6 text-center text-sm text-[var(--sea-ink-soft)]">
-        <Link
-          to="/archive/$date"
-          params={{ date: '2025-03-19' }}
-          className="font-semibold text-[var(--lagoon-deep)] underline"
-        >
-          Exemple d’archive (2025-03-19)
-        </Link>
-      </p>
     </main>
   )
 }

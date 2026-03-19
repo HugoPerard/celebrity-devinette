@@ -27,8 +27,7 @@ Ce dépôt est pensé pour une **PR quotidienne** (Cursor, script local, ou huma
    ```
 
    - Ouvrir `/` : l’image et l’indice s’affichent.  
-   - Tester une **mauvaise** puis une **bonne** réponse.  
-   - Vérifier `/archive/YYYY-MM-DD` si besoin.
+   - Tester une **mauvaise** puis une **bonne** réponse.
 
 4. **Commit & PR**
 

@@ -28,7 +28,7 @@ pnpm preview
 |--------|------|
 | `content/puzzles/YYYY-MM-DD.json` | Métadonnées + `answerNormalized` (validation serveur) |
 | `public/puzzles/` | Images raster servies en statique (`.png`, `.webp`, `.jpg` — pas de SVG) |
-| `src/server/puzzle-fns.ts` | `getTodayPuzzlePublic`, `submitGuess`, etc. |
+| `src/server/puzzle-fns.ts` | `getTodayPuzzlePublic`, `submitGuess` |
 | `docs/automation-daily-puzzle.md` | Checklist publication quotidienne |
 
 ## Tests
@@ -39,10 +39,9 @@ pnpm test
 
 ## Puzzles d’exemple
 
-- `2026-03-19` — devinette « du jour » pour une date d’exemple.  
-- `2025-03-19` — archive : `/archive/2025-03-19`.
+Fichiers `2026-03-19` et `2025-03-19` dans `content/puzzles/` (la page d’accueil affiche la devinette résolue pour la date du jour à Paris, ou la plus récente disponible).
 
-Réponses normalisées attendues pour essayer : `jean dujardin` / `marion cotillard`.
+Réponses pour tester : `jean dujardin` / `marion cotillard`.
 
 ## Déploiement
 
