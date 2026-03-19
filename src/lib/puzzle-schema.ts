@@ -12,7 +12,6 @@ export const puzzleFileSchema = z.object({
     .refine((p) => !/\.svg$/i.test(p), {
       message: 'imagePath must be a raster image (.png, .webp, .jpg, …), not .svg',
     }),
-  hint: z.string().optional(),
   /** Lowercase, no accents, single spaces between tokens (see normalizeGuess). */
   answerNormalized: z.string().min(1),
   celebrityPublicName: z.string().optional(),
@@ -21,4 +20,4 @@ export const puzzleFileSchema = z.object({
 export type PuzzleFile = z.infer<typeof puzzleFileSchema>
 
 /** Safe to send to the client */
-export type PuzzlePublic = Pick<PuzzleFile, 'date' | 'imagePath' | 'hint'>
+export type PuzzlePublic = Pick<PuzzleFile, 'date' | 'imagePath'>

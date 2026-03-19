@@ -3,7 +3,11 @@ import { join } from 'node:path'
 import { createServerFn } from '@tanstack/react-start'
 import { normalizeGuess } from '#/lib/normalize-guess'
 import { puzzleFileSchema, type PuzzlePublic } from '#/lib/puzzle-schema'
-import { puzzlesDir, resolvePuzzleDateForPlay } from '#/server/puzzle-dates'
+import {
+  listPuzzleDates,
+  puzzlesDir,
+  resolvePuzzleDateForPlay,
+} from '#/server/puzzle-dates'
 
 async function loadPuzzleFile(date: string) {
   const path = join(puzzlesDir(), `${date}.json`)
@@ -20,7 +24,6 @@ function toPublic(puzzle: Awaited<ReturnType<typeof loadPuzzleFile>>): PuzzlePub
   return {
     date: puzzle.date,
     imagePath: puzzle.imagePath,
-    hint: puzzle.hint,
   }
 }
 
@@ -31,6 +34,19 @@ export const getTodayPuzzlePublic = createServerFn({ method: 'GET' }).handler(
     const puzzle = await loadPuzzleFile(date)
     return toPublic(puzzle)
   },
+)
+
+export const getPuzzleByDate = createServerFn({ method: 'GET' })
+  .inputValidator((d: { date: string }) => d)
+  .handler(async ({ data }): Promise<PuzzlePublic | null> => {
+    const dates = await listPuzzleDates()
+    if (!dates.includes(data.date)) return null
+    const puzzle = await loadPuzzleFile(data.date)
+    return toPublic(puzzle)
+  })
+
+export const listAvailableDates = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<string[]> => listPuzzleDates(),
 )
 
 export const submitGuess = createServerFn({ method: 'POST' })

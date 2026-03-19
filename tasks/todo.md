@@ -13,7 +13,7 @@
 - Build : `pnpm build` OK.
 - Tests : `pnpm test` (normalizeGuess).
 - Client bundle : pas de chaînes `answerNormalized` / réponses dans `dist/client`.
-- Loader : données publiques uniquement (`date`, `imagePath`, `hint`).
+- Loader : données publiques uniquement (`date`, `imagePath`).
 
 ## Suite possible
 

@@ -1,133 +1,316 @@
-import { useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
-import { useServerFn } from '@tanstack/react-start'
-import {
-  getTodayPuzzlePublic,
-  submitGuess as submitGuessFn,
-} from '#/server/puzzle-fns'
-import { PUZZLE_TIMEZONE } from '#/lib/puzzle-constants'
+import { useLayoutEffect, useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { getUiState } from "@bearstudio/ui-state";
+import { CircleCheckIcon } from "lucide-react";
+import { submitGuess as submitGuessFn } from "#/server/puzzle-fns";
+import { queryClient } from "#/lib/query-client";
+import { todayPuzzleQueryOptions } from "#/lib/puzzle-queries";
+import { useServerFn } from "@tanstack/react-start";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-export const Route = createFileRoute('/')({
-  loader: () => getTodayPuzzlePublic(),
+const STORAGE_KEY = "puzzle-solved";
+
+function formatDisplayDate(isoDate: string): string {
+  const [y, m, d] = isoDate.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function isDateSolved(date: string): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const solved = raw ? (JSON.parse(raw) as Record<string, boolean>) : {};
+    return solved[date] === true;
+  } catch {
+    return false;
+  }
+}
+
+function markDateSolved(date: string) {
+  if (typeof window === "undefined") return;
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const solved = raw ? (JSON.parse(raw) as Record<string, boolean>) : {};
+    solved[date] = true;
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(solved));
+  } catch {
+    // ignore storage errors
+  }
+}
+
+export const Route = createFileRoute("/")({
+  loader: async () => {
+    const data = await queryClient.ensureQueryData(todayPuzzleQueryOptions());
+    return data;
+  },
   component: Home,
-})
+});
 
 function Home() {
-  const puzzle = Route.useLoaderData()
-  const submitGuess = useServerFn(submitGuessFn)
-  const [guess, setGuess] = useState('')
-  const [status, setStatus] = useState<
-    'idle' | 'submitting' | 'success' | 'wrong'
-  >('idle')
-  const [error, setError] = useState<string | null>(null)
+  const loaderData = Route.useLoaderData();
+  const puzzleQuery = useQuery({
+    ...todayPuzzleQueryOptions(),
+    initialData: loaderData,
+  });
+  const submitGuess = useServerFn(submitGuessFn);
+  const [guess, setGuess] = useState("");
+  const [solvedFromStorage, setSolvedFromStorage] = useState(false);
 
-  if (!puzzle) {
-    return (
-      <main className="page-wrap flex min-h-[60vh] flex-col px-4 pb-12 pt-10">
-        <section className="island-shell rise-in m-auto w-full max-w-lg rounded-2xl p-8 text-center">
-          <h2 className="display-title mb-3 text-2xl font-bold text-[var(--sea-ink)]">
-            Aucune devinette pour l’instant
-          </h2>
-          <p className="text-[var(--sea-ink-soft)]">
-            Ajoute <code>content/puzzles/YYYY-MM-DD.json</code> et l’image sous{' '}
-            <code>public/puzzles/</code>.
-          </p>
-        </section>
-      </main>
-    )
-  }
+  useLayoutEffect(() => {
+    if (puzzleQuery.data && isDateSolved(puzzleQuery.data.date)) {
+      setSolvedFromStorage(true);
+    }
+  }, [puzzleQuery.data?.date]);
+
+  const submitMutation = useMutation({
+    mutationFn: async ({ date, guess }: { date: string; guess: string }) => {
+      const result = await submitGuess({ data: { date, guess } });
+      return { ...result, date };
+    },
+    onSuccess: (data) => {
+      if (data.ok) {
+        markDateSolved(data.date);
+      }
+    },
+  });
+
+  const ui = getUiState((set) => {
+    if (puzzleQuery.isPending && !puzzleQuery.data) return set("pending");
+    if (puzzleQuery.isError) return set("error");
+    const puzzle = puzzleQuery.data;
+    if (!puzzle) return set("no-puzzle");
+    const solved =
+      solvedFromStorage ||
+      (submitMutation.isSuccess && submitMutation.data?.ok);
+    if (solved) return set("success", { puzzle });
+    if (submitMutation.isSuccess && !submitMutation.data?.ok)
+      return set("wrong", { puzzle });
+    return set("form", { puzzle });
+  });
 
   async function onSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setError(null)
-    setStatus('submitting')
-    try {
-      const result = await submitGuess({
-        data: { date: puzzle.date, guess },
-      })
-      if (result.ok) {
-        setStatus('success')
-      } else {
-        setStatus('wrong')
-      }
-    } catch {
-      setError('Impossible de valider pour le moment. Réessaie plus tard.')
-      setStatus('idle')
-    }
+    e.preventDefault();
+    if (!puzzleQuery.data) return;
+    submitMutation.mutate({ date: puzzleQuery.data.date, guess });
   }
 
+  return ui
+    .match("pending", () => (
+      <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col items-center justify-center px-4 pb-16 pt-12 sm:pt-14">
+        <p className="text-sm text-muted-foreground">Chargement…</p>
+      </main>
+    ))
+    .match("error", () => (
+      <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col px-4 pb-16 pt-12 sm:pt-14">
+        <div className="m-auto w-full max-w-lg text-center">
+          <h2 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl">
+            Erreur de chargement
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Impossible de charger la devinette. Réessaie plus tard.
+          </p>
+          <Link
+            to="/archives"
+            className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Voir les archives
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </main>
+    ))
+    .match("no-puzzle", () => (
+      <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col px-4 pb-16 pt-12 sm:pt-14">
+        <div className="m-auto w-full max-w-lg text-center">
+          <h2 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl">
+            Aucune devinette pour l'instant
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Ajoute{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-medium">
+              content/puzzles/YYYY-MM-DD.json
+            </code>{" "}
+            et l'image sous{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-medium">
+              public/puzzles/
+            </code>
+            .
+          </p>
+          <Link
+            to="/archives"
+            className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Voir les archives
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </main>
+    ))
+    .match("success", ({ puzzle }) => (
+      <main className="mx-auto w-full max-w-4xl px-4 pb-16 pt-12 sm:pt-14">
+        <div className="mx-auto max-w-lg">
+          <p className="mb-1 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            Aujourd'hui
+          </p>
+          <p className="mb-8 text-center text-sm text-muted-foreground">
+            <span className="font-medium capitalize text-foreground">
+              {formatDisplayDate(puzzle.date)}
+            </span>
+          </p>
+          <div className="mx-auto mb-8 aspect-square max-w-sm overflow-hidden rounded-2xl border border-border/80 bg-muted ring-1 ring-black/5 sm:max-w-[400px]">
+            <img
+              src={puzzle.imagePath}
+              alt="Indice visuel pour la devinette"
+              className="h-full w-full object-cover"
+              width={400}
+              height={400}
+              loading="eager"
+            />
+          </div>
+          <Alert variant="success" className="mb-8">
+            <CircleCheckIcon aria-hidden className="size-4 shrink-0" />
+            <AlertTitle>Bravo — bonne réponse !</AlertTitle>
+            <AlertDescription>
+              Reviens demain pour une nouvelle énigme.
+            </AlertDescription>
+          </Alert>
+          <p className="mt-10 text-center">
+            <Link
+              to="/archives"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <span>Voir les archives</span>
+              <span aria-hidden>→</span>
+            </Link>
+          </p>
+        </div>
+      </main>
+    ))
+    .match("wrong", ({ puzzle }) => (
+      <PuzzleForm
+        puzzle={puzzle}
+        guess={guess}
+        setGuess={setGuess}
+        onSubmit={onSubmit}
+        submitMutation={submitMutation}
+        variant="wrong"
+      />
+    ))
+    .match("form", ({ puzzle }) => (
+      <PuzzleForm
+        puzzle={puzzle}
+        guess={guess}
+        setGuess={setGuess}
+        onSubmit={onSubmit}
+        submitMutation={submitMutation}
+        variant="form"
+      />
+    ))
+    .exhaustive();
+}
+
+function PuzzleForm({
+  puzzle,
+  guess,
+  setGuess,
+  onSubmit,
+  submitMutation,
+  variant,
+}: {
+  puzzle: { date: string; imagePath: string };
+  guess: string;
+  setGuess: (v: string) => void;
+  onSubmit: (e: React.FormEvent) => void;
+  submitMutation: {
+    mutate: (v: { date: string; guess: string }) => void;
+    isPending: boolean;
+    isError: boolean;
+    reset: () => void;
+  };
+  variant: "form" | "wrong";
+}) {
   return (
-    <main className="page-wrap px-4 pb-12 pt-10">
-      <section className="island-shell rise-in relative mx-auto max-w-lg overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-12">
-        <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(79,184,178,0.32),transparent_66%)]" />
-        <p className="island-kicker mb-2 text-center">Aujourd’hui</p>
-        <p className="mb-6 text-center text-sm text-[var(--sea-ink-soft)]">
-          {PUZZLE_TIMEZONE} · <strong>{puzzle.date}</strong>
+    <main className="mx-auto w-full max-w-4xl px-4 pb-16 pt-12 sm:pt-14">
+      <div className="mx-auto max-w-lg">
+        <p className="mb-1 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          Aujourd'hui
         </p>
-        <div className="mx-auto mb-8 max-w-md overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--chip-bg)] shadow-[0_12px_40px_rgba(30,90,72,0.12)]">
+        <p className="mb-8 text-center text-sm text-muted-foreground">
+          <span className="font-medium capitalize text-foreground">
+            {formatDisplayDate(puzzle.date)}
+          </span>
+        </p>
+        <div className="mx-auto mb-8 aspect-square max-w-sm overflow-hidden rounded-2xl border border-border/80 bg-muted ring-1 ring-black/5 sm:max-w-[400px]">
           <img
             src={puzzle.imagePath}
             alt="Indice visuel pour la devinette"
-            className="h-auto w-full object-cover"
+            className="h-full w-full object-cover"
             width={400}
             height={400}
+            loading="eager"
           />
         </div>
-        {puzzle.hint ? (
-          <p className="mb-6 text-center text-sm text-[var(--sea-ink-soft)]">
-            <span className="font-semibold text-[var(--sea-ink)]">Indice :</span>{' '}
-            {puzzle.hint}
-          </p>
-        ) : null}
-
-        {status === 'success' ? (
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 px-6 py-8 text-center dark:border-emerald-800 dark:bg-emerald-950/40">
-            <p className="text-lg font-semibold text-emerald-800 dark:text-emerald-200">
-              Bravo — bonne réponse !
-            </p>
-            <p className="mt-2 text-sm text-[var(--sea-ink-soft)]">
-              Reviens demain pour une nouvelle énigme.
-            </p>
-          </div>
-        ) : (
-          <form
-            onSubmit={onSubmit}
-            className="mx-auto flex max-w-md flex-col gap-3"
+        <form
+          onSubmit={onSubmit}
+          className="mx-auto flex max-w-md flex-col gap-4"
+        >
+          <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+            Ta réponse
+            <Input
+              nativeInput
+              placeholder="Prénom et nom…"
+              value={guess}
+              onChange={(e) => {
+                setGuess(e.target.value);
+                if (variant === "wrong") submitMutation.reset();
+              }}
+              disabled={submitMutation.isPending}
+              autoComplete="off"
+              className="h-11 sm:h-10"
+            />
+          </label>
+          {variant === "wrong" && (
+            <Alert variant="warning">
+              <AlertDescription>
+                Ce n'est pas ça — encore un essai ?
+              </AlertDescription>
+            </Alert>
+          )}
+          {submitMutation.isError && (
+            <Alert variant="error">
+              <AlertDescription>
+                Impossible de valider pour le moment. Réessaie plus tard.
+              </AlertDescription>
+            </Alert>
+          )}
+          <Button
+            type="submit"
+            size="lg"
+            disabled={submitMutation.isPending || !guess.trim()}
+            loading={submitMutation.isPending}
+            className="mt-1"
           >
-            <label className="text-sm font-medium text-[var(--sea-ink)]">
-              Ta réponse
-              <input
-                type="text"
-                name="guess"
-                value={guess}
-                onChange={(e) => {
-                  setGuess(e.target.value)
-                  if (status === 'wrong') setStatus('idle')
-                }}
-                autoComplete="off"
-                className="mt-1 w-full rounded-xl border border-[var(--line)] bg-white/80 px-4 py-3 text-[var(--sea-ink)] shadow-inner outline-none transition focus:border-[rgba(79,184,178,0.6)] focus:ring-2 focus:ring-[rgba(79,184,178,0.25)] dark:bg-zinc-900/80"
-                placeholder="Prénom et nom…"
-                disabled={status === 'submitting'}
-              />
-            </label>
-            {status === 'wrong' ? (
-              <p className="text-sm text-amber-700 dark:text-amber-300">
-                Ce n’est pas ça — encore un essai ?
-              </p>
-            ) : null}
-            {error ? (
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-            ) : null}
-            <button
-              type="submit"
-              disabled={status === 'submitting' || !guess.trim()}
-              className="rounded-full border border-[rgba(50,143,151,0.35)] bg-[rgba(79,184,178,0.2)] px-6 py-3 text-sm font-semibold text-[var(--lagoon-deep)] transition enabled:hover:-translate-y-0.5 enabled:hover:bg-[rgba(79,184,178,0.32)] disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {status === 'submitting' ? 'Vérification…' : 'Valider'}
-            </button>
-          </form>
-        )}
-      </section>
+            {submitMutation.isPending ? "Vérification…" : "Valider"}
+          </Button>
+        </form>
+        <p className="mt-10 text-center">
+          <Link
+            to="/archives"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <span>Voir les archives</span>
+            <span aria-hidden>→</span>
+          </Link>
+        </p>
+      </div>
     </main>
-  )
+  );
 }

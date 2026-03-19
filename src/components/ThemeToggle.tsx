@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
 
 type ThemeMode = 'light' | 'dark' | 'auto'
 
@@ -67,14 +68,18 @@ export default function ThemeToggle() {
       ? 'Theme mode: auto (system). Click to switch to light mode.'
       : `Theme mode: ${mode}. Click to switch mode.`
 
+  const Icon =
+    mode === 'auto' ? MonitorIcon : mode === 'dark' ? MoonIcon : SunIcon
+
   return (
     <button
       type="button"
       onClick={toggleMode}
       aria-label={label}
       title={label}
-      className="rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-1.5 text-sm font-semibold text-[var(--sea-ink)] shadow-[0_8px_22px_rgba(30,90,72,0.08)] transition hover:-translate-y-0.5"
+      className="flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1.5 text-sm font-semibold text-foreground transition hover:bg-muted/80 motion-safe:hover:-translate-y-0.5"
     >
+      <Icon aria-hidden className="size-3.5" />
       {mode === 'auto' ? 'Auto' : mode === 'dark' ? 'Dark' : 'Light'}
     </button>
   )

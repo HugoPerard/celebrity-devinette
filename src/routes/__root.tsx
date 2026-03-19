@@ -3,8 +3,10 @@ import {
   Scripts,
   createRootRoute,
 } from '@tanstack/react-router'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import { queryClient } from '../lib/query-client'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
@@ -20,10 +22,10 @@ export const Route = createRootRoute({
       },
       {
         name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        content: 'width=device-width, initial-scale=1, viewport-fit=cover',
       },
       {
-        title: 'Devinette célébrités',
+        title: 'Kasistar',
       },
     ],
     links: [
@@ -43,10 +45,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="flex min-h-screen flex-col font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
-        <Header />
-        <div className="flex-1">{children}</div>
-        <Footer />
+      <body className="flex min-h-screen flex-col font-sans antialiased [overflow-wrap:anywhere] selection:bg-primary/20 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+        <QueryClientProvider client={queryClient}>
+          <a
+            href="#main"
+            className="absolute left-4 top-4 z-[100] -translate-y-[200%] rounded bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow-md transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          >
+            Aller au contenu
+          </a>
+          <Header />
+          <div id="main" className="flex-1" tabIndex={-1}>
+            {children}
+          </div>
+          <Footer />
+        </QueryClientProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',

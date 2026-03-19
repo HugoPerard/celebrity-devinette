@@ -15,7 +15,7 @@ Ce dépôt est pensé pour une **PR quotidienne** (Cursor, script local, ou huma
 
 2. **Créer le JSON**  
    - Chemin : `content/puzzles/YYYY-MM-DD.json`.  
-   - Remplir `date`, `imagePath` (ex. `/puzzles/YYYY-MM-DD.webp`), `hint`, `answerNormalized` (voir `.cursor/rules/puzzle-generation.mdc`).  
+   - Remplir `date`, `imagePath` (ex. `/puzzles/YYYY-MM-DD.webp`), `answerNormalized` (voir `.cursor/rules/puzzle-generation.mdc`).  
    - Contrôler que `answerNormalized` === résultat de la même normalisation que l’utilisateur taperait (prénom + nom, etc.).
 
 3. **Valider localement**
