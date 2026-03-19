@@ -8,6 +8,9 @@ export const puzzleFileSchema = z.object({
     .min(1)
     .refine((p) => p.startsWith('/puzzles/'), {
       message: 'imagePath must be under /puzzles/',
+    })
+    .refine((p) => !/\.svg$/i.test(p), {
+      message: 'imagePath must be a raster image (.png, .webp, .jpg, …), not .svg',
     }),
   hint: z.string().optional(),
   /** Lowercase, no accents, single spaces between tokens (see normalizeGuess). */

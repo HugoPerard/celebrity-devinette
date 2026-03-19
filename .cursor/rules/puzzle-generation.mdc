@@ -21,7 +21,7 @@ alwaysApply: false
    - `answerNormalized` : texte normalisé comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples entre mots ; ex. `jean dujardin`).
    - `celebrityPublicName` (optionnel) : pour notes internes / PR, pas affiché par l’app.
 
-2. **Image** : `public/puzzles/YYYY-MM-DD.svg` ou `.png` / `.webp`, référencée par `imagePath`.
+2. **Image** : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (raster uniquement — **pas de SVG**), référencée par `imagePath`.
 
 ## Fuseau horaire
 

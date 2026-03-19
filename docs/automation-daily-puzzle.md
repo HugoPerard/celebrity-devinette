@@ -10,7 +10,7 @@ Ce dépôt est pensé pour une **PR quotidienne** (Cursor, script local, ou huma
 ## Checklist
 
 1. **Créer l’image**  
-   - Chemin : `public/puzzles/YYYY-MM-DD.svg` (ou `.png` / `.webp`).  
+   - Chemin : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (**pas de SVG**).  
    - Taille raisonnable (éviter fichiers énormes dans Git).
 
 2. **Créer le JSON**  
@@ -34,7 +34,7 @@ Ce dépôt est pensé pour une **PR quotidienne** (Cursor, script local, ou huma
 
    ```bash
    git checkout -b puzzle/YYYY-MM-DD
-   git add content/puzzles/YYYY-MM-DD.json public/puzzles/YYYY-MM-DD.*
+   git add content/puzzles/YYYY-MM-DD.json public/puzzles/YYYY-MM-DD.<png|webp|jpg>
    git commit -m "puzzle: add YYYY-MM-DD"
    git push -u origin puzzle/YYYY-MM-DD
    ```
