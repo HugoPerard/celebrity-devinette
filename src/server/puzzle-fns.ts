@@ -1,7 +1,11 @@
 import { createServerFn } from '@tanstack/react-start'
 import { normalizeGuess } from '#/lib/normalize-guess'
 import { type PuzzlePublic } from '#/lib/puzzle-schema'
-import { listPuzzleDates, resolvePuzzleDateForPlay } from '#/server/puzzle-dates'
+import {
+  isPuzzleDateReleased,
+  listReleasedPuzzleDates,
+  resolvePuzzleDateForPlay,
+} from '#/server/puzzle-dates'
 import { getPuzzleFile } from '#/server/puzzle-registry'
 
 function loadPuzzleFile(date: string) {
@@ -29,19 +33,20 @@ export const getTodayPuzzlePublic = createServerFn({ method: 'GET' }).handler(
 export const getPuzzleByDate = createServerFn({ method: 'GET' })
   .inputValidator((d: { date: string }) => d)
   .handler(async ({ data }): Promise<PuzzlePublic | null> => {
-    const dates = await listPuzzleDates()
-    if (!dates.includes(data.date)) return null
-    const puzzle = await loadPuzzleFile(data.date)
+    if (!isPuzzleDateReleased(data.date)) return null
+    const puzzle = getPuzzleFile(data.date)
+    if (!puzzle) return null
     return toPublic(puzzle)
   })
 
 export const listAvailableDates = createServerFn({ method: 'GET' }).handler(
-  async (): Promise<string[]> => listPuzzleDates(),
+  async (): Promise<string[]> => listReleasedPuzzleDates(),
 )
 
 export const submitGuess = createServerFn({ method: 'POST' })
   .inputValidator((d: { date: string; guess: string }) => d)
   .handler(async ({ data }) => {
+    if (!isPuzzleDateReleased(data.date)) return { ok: false } as const
     const puzzle = await loadPuzzleFile(data.date)
     const g = normalizeGuess(data.guess)
     const ok = g.length > 0 && g === puzzle.answerNormalized

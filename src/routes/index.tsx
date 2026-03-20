@@ -10,6 +10,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoadingPuzzleHint } from "@/components/loading-puzzle-hint";
+import { PuzzleImage } from "@/components/puzzle-image";
 import { useSound } from "@/hooks/use-sound";
 import { confirmation003Sound } from "@/lib/confirmation-003";
 import { error008Sound } from "@/lib/error-008";
@@ -56,6 +58,14 @@ export const Route = createFileRoute("/")({
   },
   component: Home,
 });
+
+function PuzzlePageHowTo() {
+  return (
+    <p className="type-body-muted-sm mx-auto mt-10 max-w-[42ch] text-balance text-center">
+      Trouve le jeu de mots sur le nom de la célébrité à partir de l'image.
+    </p>
+  );
+}
 
 function Home() {
   const loaderData = Route.useLoaderData();
@@ -115,23 +125,20 @@ function Home() {
 
   return ui
     .match("pending", () => (
-      <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col items-center justify-center px-4 pb-16 pt-12 sm:pt-14">
-        <p className="text-sm text-muted-foreground">Chargement…</p>
+      <main className="page-atmosphere mx-auto flex w-full max-w-4xl flex-col items-center justify-center">
+        <div className="content-panel content-panel--compact w-full max-w-lg">
+          <LoadingPuzzleHint />
+        </div>
       </main>
     ))
     .match("error", () => (
-      <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col px-4 pb-16 pt-12 sm:pt-14">
-        <div className="m-auto w-full max-w-lg text-center">
-          <h2 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl">
-            Erreur de chargement
-          </h2>
-          <p className="text-sm text-muted-foreground">
+      <main className="page-atmosphere mx-auto flex w-full max-w-4xl flex-col items-center justify-center">
+        <div className="content-panel content-panel--compact m-auto w-full max-w-lg text-center">
+          <h2 className="type-page-title mb-3">Erreur de chargement</h2>
+          <p className="type-body-muted mx-auto max-w-[65ch]">
             Impossible de charger la devinette. Réessaie plus tard.
           </p>
-          <Link
-            to="/archives"
-            className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <Link to="/archives" className="type-link-subtle mt-8">
             Voir les archives
             <span aria-hidden>→</span>
           </Link>
@@ -139,12 +146,12 @@ function Home() {
       </main>
     ))
     .match("no-puzzle", () => (
-      <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col px-4 pb-16 pt-12 sm:pt-14">
-        <div className="m-auto w-full max-w-lg text-center">
-          <h2 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl">
+      <main className="page-atmosphere mx-auto flex w-full max-w-4xl flex-col items-center justify-center">
+        <div className="content-panel content-panel--compact m-auto w-full max-w-lg text-center">
+          <h2 className="type-page-title mb-3">
             Aucune devinette pour l'instant
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="type-body-muted mx-auto max-w-[65ch]">
             Ajoute{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-medium">
               content/puzzles/YYYY-MM-DD.json
@@ -155,10 +162,7 @@ function Home() {
             </code>
             .
           </p>
-          <Link
-            to="/archives"
-            className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <Link to="/archives" className="type-link-subtle mt-8">
             Voir les archives
             <span aria-hidden>→</span>
           </Link>
@@ -166,38 +170,32 @@ function Home() {
       </main>
     ))
     .match("success", ({ puzzle }) => (
-      <main className="mx-auto w-full max-w-4xl px-4 pb-16 pt-12 sm:pt-14">
-        <div className="mx-auto max-w-lg">
-          <p className="mb-1 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Aujourd'hui
-          </p>
-          <p className="mb-8 text-center text-sm text-muted-foreground">
-            <span className="font-medium capitalize text-foreground">
+      <main className="page-atmosphere mx-auto w-full max-w-4xl">
+        <div className="content-panel motion-safe:animate-success-pop motion-reduce:animate-none">
+          <p className="type-overline mb-2 text-center">Aujourd'hui</p>
+          <p className="mb-8 text-center">
+            <span className="type-date-hero glass-date-pill cursor-default">
               {formatDisplayDate(puzzle.date)}
             </span>
           </p>
-          <div className="mx-auto mb-8 aspect-square max-w-sm overflow-hidden rounded-2xl border border-border/80 bg-muted ring-1 ring-black/5 sm:max-w-[400px]">
-            <img
+          <div className="puzzle-frame">
+            <PuzzleImage
               src={puzzle.imagePath}
               alt="Indice visuel pour la devinette"
-              className="h-full w-full object-cover"
-              width={400}
-              height={400}
+              fetchPriority="high"
               loading="eager"
             />
           </div>
           <Alert variant="success" className="mb-8">
             <CircleCheckIcon aria-hidden className="size-4 shrink-0" />
-            <AlertTitle>Bravo — bonne réponse !</AlertTitle>
+            <AlertTitle>Chapeau — c'est la bonne réponse !</AlertTitle>
             <AlertDescription>
-              Reviens demain pour une nouvelle énigme.
+              Rendez-vous demain pour une nouvelle énigme.
             </AlertDescription>
           </Alert>
-          <p className="mt-10 text-center">
-            <Link
-              to="/archives"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
+          <PuzzlePageHowTo />
+          <p className="mt-6 text-center">
+            <Link to="/archives" className="type-link-subtle">
               <span>Voir les archives</span>
               <span aria-hidden>→</span>
             </Link>
@@ -249,23 +247,19 @@ function PuzzleForm({
   variant: "form" | "wrong";
 }) {
   return (
-    <main className="mx-auto w-full max-w-4xl px-4 pb-16 pt-12 sm:pt-14">
-      <div className="mx-auto max-w-lg">
-        <p className="mb-1 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-          Aujourd'hui
-        </p>
-        <p className="mb-8 text-center text-sm text-muted-foreground">
-          <span className="font-medium capitalize text-foreground">
+    <main className="page-atmosphere mx-auto w-full max-w-4xl">
+      <div className="content-panel mx-auto max-w-lg">
+        <p className="type-overline mb-2 text-center">Aujourd'hui</p>
+        <p className="mb-8 text-center">
+          <span className="type-date-hero glass-date-pill cursor-default">
             {formatDisplayDate(puzzle.date)}
           </span>
         </p>
-        <div className="mx-auto mb-8 aspect-square max-w-sm overflow-hidden rounded-2xl border border-border/80 bg-muted ring-1 ring-black/5 sm:max-w-[400px]">
-          <img
+        <div className="puzzle-frame">
+          <PuzzleImage
             src={puzzle.imagePath}
             alt="Indice visuel pour la devinette"
-            className="h-full w-full object-cover"
-            width={400}
-            height={400}
+            fetchPriority="high"
             loading="eager"
           />
         </div>
@@ -273,7 +267,7 @@ function PuzzleForm({
           onSubmit={onSubmit}
           className="mx-auto flex max-w-md flex-col gap-4"
         >
-          <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+          <label className="type-label flex flex-col gap-2">
             Ta réponse
             <Input
               nativeInput
@@ -291,7 +285,7 @@ function PuzzleForm({
           {variant === "wrong" && (
             <Alert variant="warning">
               <AlertDescription>
-                Ce n'est pas ça — encore un essai ?
+                Pas cette fois — un autre essai ?
               </AlertDescription>
             </Alert>
           )}
@@ -309,14 +303,12 @@ function PuzzleForm({
             loading={submitMutation.isPending}
             className="mt-1"
           >
-            {submitMutation.isPending ? "Vérification…" : "Valider"}
+            {submitMutation.isPending ? "Vérification de ta réponse…" : "Valider"}
           </Button>
         </form>
-        <p className="mt-10 text-center">
-          <Link
-            to="/archives"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
+        <PuzzlePageHowTo />
+        <p className="mt-6 text-center">
+          <Link to="/archives" className="type-link-subtle">
             <span>Voir les archives</span>
             <span aria-hidden>→</span>
           </Link>

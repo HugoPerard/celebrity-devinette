@@ -14,6 +14,15 @@ alwaysApply: false
 - La devinette doit être un **jeu de mots** avec indice visuel **concret** ; l’illustration stylisée doit **fortement évoquer** la personnalité publique (voir section ressemblance dans `docs/puzzle-generation-rules.md`), sans photo de presse ni rendu trompeur type deepfake.
 - **Langue** : indices et métadonnées en français, sauf exception documentée.
 
+## Diversité des figures
+
+Sur une **série de devinettes** (semaine, mois), **varier les « sources »** de célébrités pour éviter l’uniformité :
+
+- **Domaines** : alterner **acteurs et actrices**, **chanteuses et chanteurs**, **personnalités politiques** (jeu léger, non diffamatoire, même cadre légal qu’ailleurs), **sportifs**, **figures de la pop culture** (télé, réseaux, jeux vidéo, mèmes durables), **auteurs / intellectuels** connus du grand public, etc.
+- **Époques** : mélanger **générations** — figures **classiques** ou associées à une époque passée, et figures **très actuelles**.
+- **Nationalités et horizons** : ne pas tout centrer sur une seule scène nationale ; inclure des personnalités **internationales** lorsque le public francophone peut raisonnablement **reconnaître** la figure ou résoudre le jeu de mots.
+- **Suivi** : avant de figer une idée, **parcourir les puzzles récents** dans `content/puzzles/` pour limiter les **répétitions** du même type (ex. trois acteurs français d’affilée) ou du même registre.
+
 ## Fichiers à produire (par jour)
 
 1. **JSON** : `content/puzzles/YYYY-MM-DD.json` avec les champs :
@@ -22,13 +31,14 @@ alwaysApply: false
    - `answerNormalized` : version **avec le jeu de mot** (prénom + nom modifié), normalisée comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `edouard bear` pour Édouard Baer, `pierre riche` pour Pierre Richard, `dany boue` pour Dany Boon, `vincent dindon` pour Vincent Lindon, `johnny holiday` pour Johnny Hallyday).
    - `celebrityPublicName` (optionnel) : pour notes internes / PR, pas affiché par l’app.
 
-2. **Image** : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (raster uniquement — **pas de SVG**), **format 400×400 pixels**, référencée par `imagePath`.
+2. **Image** : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (raster uniquement — **pas de SVG**), **400×400 pixels**, **contenu en plein cadre** (l’illustration remplit tout le carré, **sans bordure**, sans marge décorative, sans bandes letterbox/pillarbox) — référencée par `imagePath`.
 
 ## Génération d’image
 
 ### Format
 
-- **Dimensions** : **400×400** pixels.
+- **Dimensions** : **exactement 400×400** pixels (carré).
+- **Plein cadre** : le dessin / la scène occupe **tout le carré** jusqu’aux bords — **pas de cadre**, **pas de passe-partout**, **pas de bandes** (noir ou autre) autour du sujet, **pas d’ombre portée « carte postale »** qui réduit la zone utile. Si l’image générée n’est pas carrée ou comporte des marges, **recadrer ou redimensionner** pour obtenir un fichier **400×400** à contenu maximal.
 
 ### Principe du jeu de mot
 

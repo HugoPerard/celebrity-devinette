@@ -10,7 +10,9 @@ Ce dépôt est pensé pour une **PR quotidienne** (Cursor, script local, ou huma
 ## Checklist
 
 1. **Créer l’image**
+   - **Diversité** : parcourir les puzzles récents dans `content/puzzles/` et choisir une figure qui **varie** les domaines, époques et horizons (acteurs, musique, politique en jeu léger, sport, pop culture, international, etc.) — voir `docs/puzzle-generation-rules.md` § *Diversité des figures*.
    - Chemin : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (**pas de SVG**).
+   - **400×400** exact, **plein cadre** (pas de bordure ni bandes) — voir `docs/puzzle-generation-rules.md` § *Format*.
    - Taille raisonnable (éviter fichiers énormes dans Git).
    - **Ressemblance** : suivre la section dédiée dans `docs/puzzle-generation-rules.md` (traits nommés, portrait/buste, prompt avec `RESSEMBLANCE`).
 

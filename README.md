@@ -41,7 +41,7 @@ pnpm test
 
 ## Puzzles d’exemple
 
-Fichiers `2026-03-19` et `2025-03-19` dans `content/puzzles/` (la page d’accueil affiche la devinette résolue pour la date du jour à Paris, ou la plus récente disponible).
+Fichiers `2026-03-19` et `2025-03-19` dans `content/puzzles/` (la page d’accueil affiche la devinette pour la date du jour à Paris si elle existe, sinon la plus récente **dont la date calendaire est déjà passée ou égale à aujourd’hui** — les fichiers datés dans le futur ne sont pas exposés côté serveur).
 
 Réponses pour tester : `jean dujardin` / `marion cotillard`.
 

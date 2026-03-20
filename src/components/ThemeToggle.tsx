@@ -77,7 +77,7 @@ export default function ThemeToggle() {
       onClick={toggleMode}
       aria-label={label}
       title={label}
-      className="flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1.5 text-sm font-semibold text-foreground transition hover:bg-muted/80 motion-safe:hover:-translate-y-0.5"
+      className="flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1.5 text-sm font-semibold text-foreground transition hover:border-primary/40 hover:bg-muted/80 motion-safe:hover:-translate-y-0.5 dark:border-white/12 dark:bg-white/[0.06] dark:hover:border-primary/45 dark:hover:bg-white/[0.09]"
     >
       <Icon aria-hidden className="size-3.5" />
       {mode === 'auto' ? 'Auto' : mode === 'dark' ? 'Dark' : 'Light'}

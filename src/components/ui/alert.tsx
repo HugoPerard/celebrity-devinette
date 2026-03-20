@@ -44,7 +44,10 @@ export function AlertTitle({
 }: React.ComponentProps<"div">): React.ReactElement {
   return (
     <div
-      className={cn("font-medium [svg~&]:col-start-2", className)}
+      className={cn(
+        "text-base font-semibold leading-snug [font-family:var(--font-heading)] [svg~&]:col-start-2",
+        className,
+      )}
       data-slot="alert-title"
       {...props}
     />
@@ -58,7 +61,7 @@ export function AlertDescription({
   return (
     <div
       className={cn(
-        "flex flex-col gap-2.5 text-muted-foreground [svg~&]:col-start-2",
+        "flex flex-col gap-2.5 text-sm leading-relaxed text-muted-foreground [svg~&]:col-start-2",
         className,
       )}
       data-slot="alert-description"

@@ -1,12 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Fraunces", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  /* UI: Inter (Revolut-like). Display: Bricolage for dates & page titles only. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Bricolage Grotesque", "Inter", ui-sans-serif, system-ui,
+    sans-serif;
 }
 
 @theme inline {
@@ -47,110 +49,247 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --animate-skeleton: skeleton 2s -1s infinite linear;
+  --animate-success-pop: success-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-image-settle: image-settle 0.5s ease-out both;
   @keyframes skeleton {
     to {
       background-position: -200% 0;
     }
   }
+  @keyframes success-pop {
+    from {
+      opacity: 0;
+      transform: translateY(0.375rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes image-settle {
+    from {
+      opacity: 0.85;
+      transform: scale(0.992);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: var(--color-white);
-  --foreground: var(--color-neutral-800);
-  --card: var(--color-white);
-  --card-foreground: var(--color-neutral-800);
-  --popover: var(--color-white);
-  --popover-foreground: var(--color-neutral-800);
-  --primary: var(--color-neutral-800);
-  --primary-foreground: var(--color-neutral-50);
-  --secondary: --alpha(var(--color-black) / 4%);
-  --secondary-foreground: var(--color-neutral-800);
-  --muted: --alpha(var(--color-black) / 4%);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--color-neutral-500) 90%,
-    var(--color-black)
-  );
-  --accent: --alpha(var(--color-black) / 4%);
-  --accent-foreground: var(--color-neutral-800);
-  --destructive: var(--color-red-500);
-  --destructive-foreground: var(--color-red-700);
-  --info: var(--color-blue-500);
-  --info-foreground: var(--color-blue-700);
-  --success: var(--color-emerald-500);
-  --success-foreground: var(--color-emerald-700);
-  --warning: var(--color-amber-500);
-  --warning-foreground: var(--color-amber-700);
-  --border: --alpha(var(--color-black) / 8%);
-  --input: --alpha(var(--color-black) / 10%);
-  --ring: var(--color-neutral-400);
-  --sidebar: var(--color-neutral-50);
+  /* Revolut-inspired: cool neutrals + electric blue primary, generous radius */
+  --radius: 1rem;
+  --background: oklch(0.994 0.004 264);
+  --foreground: oklch(0.2 0.02 264);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.46 0.22 264);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.012 264);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.965 0.01 264);
+  --muted-foreground: oklch(0.46 0.022 264);
+  --accent: oklch(0.95 0.015 264);
+  --accent-foreground: oklch(0.22 0.03 264);
+  --destructive: oklch(0.52 0.19 25);
+  --destructive-foreground: oklch(0.99 0.01 25);
+  --info: oklch(0.5 0.14 264);
+  --info-foreground: oklch(0.99 0 0);
+  --success: oklch(0.55 0.17 155);
+  --success-foreground: oklch(0.99 0.01 155);
+  --warning: oklch(0.72 0.14 78);
+  --warning-foreground: oklch(0.28 0.06 55);
+  --border: oklch(0.9 0.012 264 / 0.65);
+  --input: oklch(0.9 0.012 264 / 0.75);
+  --ring: oklch(0.52 0.18 264);
+  --sidebar: oklch(0.98 0.008 264);
   --sidebar-foreground: color-mix(
-    in srgb,
-    var(--color-neutral-800) 64%,
+    in oklch,
+    var(--foreground) 70%,
     var(--sidebar)
   );
-  --sidebar-primary: var(--color-neutral-800);
-  --sidebar-primary-foreground: var(--color-neutral-50);
-  --sidebar-accent: --alpha(var(--color-black) / 4%);
-  --sidebar-accent-foreground: var(--color-neutral-800);
-  --sidebar-border: --alpha(var(--color-black) / 6%);
-  --sidebar-ring: var(--color-neutral-400);
+  --sidebar-primary: oklch(0.46 0.22 264);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.95 0.012 264);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: oklch(0.9 0.012 264 / 0.5);
+  --sidebar-ring: oklch(0.52 0.18 264);
+}
+
+/* Semantic type — Inter body, Bricolage for display & headings */
+@layer components {
+  .type-overline {
+    @apply text-xs font-semibold uppercase tracking-[0.2em] text-primary/90;
+  }
+
+  .type-date-hero {
+    @apply block text-center font-semibold capitalize leading-[1.12] tracking-tight text-foreground;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 1.05rem + 2.75vw, 2.5rem);
+  }
+
+  .type-page-title {
+    @apply text-center text-2xl font-semibold leading-tight tracking-tight text-foreground sm:text-3xl;
+    font-family: var(--font-heading);
+  }
+
+  .type-body-muted {
+    @apply text-base leading-relaxed text-muted-foreground;
+  }
+
+  .type-body-muted-sm {
+    @apply text-sm leading-relaxed text-muted-foreground;
+  }
+
+  .type-label {
+    @apply text-sm font-semibold tracking-wide text-foreground;
+  }
+
+  .type-link-subtle {
+    @apply inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary;
+  }
+
+  .type-footer-lead {
+    @apply text-sm font-medium leading-snug text-muted-foreground;
+  }
+
+  .type-footer-note {
+    @apply text-xs leading-relaxed text-muted-foreground/90;
+  }
+
+  .type-brand-wordmark {
+    @apply text-lg font-bold tracking-tight sm:text-xl;
+  }
+
+  /**
+   * Puzzle image — shared frame. `w-full` + `aspect-square` reserves space before decode
+   * (matches 400×400 assets, see `PUZZLE_IMAGE_SIZE`).
+   */
+  .puzzle-frame {
+    @apply mx-auto mb-8 aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-border bg-muted ring-1 ring-black/5 motion-safe:animate-image-settle motion-reduce:animate-none sm:max-w-[min(100%,26rem)] dark:bg-card dark:ring-white/10;
+  }
+
+  /** Empty / picker placeholder — same footprint as `.puzzle-frame`, no layout jump */
+  .puzzle-frame-empty {
+    @apply mx-auto mb-8 flex aspect-square w-full max-w-sm items-center justify-center overflow-hidden rounded-3xl border border-dashed border-border bg-muted/60 sm:max-w-[min(100%,26rem)] dark:bg-white/[0.04];
+  }
+
+  /**
+   * Top bar — floating frosted pill (nav), not the main content.
+   */
+  .topbar-glass {
+    @apply rounded-[2rem] border border-white/25 bg-white/45 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.14),0_2px_8px_-4px_rgba(0,0,0,0.06)] backdrop-blur-2xl backdrop-saturate-150;
+    @apply dark:border-white/12 dark:bg-white/[0.07] dark:shadow-[0_16px_48px_-16px_rgba(0,0,0,0.55)];
+  }
+
+  /**
+   * Main column — spacing only, no glass card (mesh is on `.app-shell`).
+   */
+  .content-panel {
+    @apply relative mx-auto w-full max-w-lg px-0 py-8 sm:py-10;
+  }
+
+  .content-panel--compact {
+    @apply py-10 sm:py-12;
+  }
+
+  /**
+   * Full-viewport shell — mesh behind header + main + footer (single paint, no band at topbar).
+   */
+  .app-shell {
+    @apply relative isolate flex min-h-dvh w-full flex-col;
+    background:
+      radial-gradient(
+        ellipse 90% 60% at 50% -15%,
+        oklch(0.55 0.17 264 / 0.09),
+        transparent 58%
+      ),
+      radial-gradient(
+        ellipse 70% 50% at 100% 5%,
+        oklch(0.52 0.14 300 / 0.07),
+        transparent 52%
+      ),
+      radial-gradient(
+        ellipse 60% 45% at 0% 100%,
+        oklch(0.58 0.11 200 / 0.06),
+        transparent 50%
+      ),
+      var(--background);
+  }
+
+  .dark .app-shell {
+    background:
+      radial-gradient(
+        ellipse 90% 60% at 50% -15%,
+        oklch(0.48 0.16 264 / 0.22),
+        transparent 58%
+      ),
+      radial-gradient(
+        ellipse 70% 50% at 100% 5%,
+        oklch(0.45 0.14 300 / 0.14),
+        transparent 52%
+      ),
+      radial-gradient(
+        ellipse 60% 45% at 0% 100%,
+        oklch(0.42 0.1 220 / 0.12),
+        transparent 50%
+      ),
+      var(--background);
+  }
+
+  /**
+   * Route main column — spacing only (background comes from `.app-shell`).
+   */
+  .page-atmosphere {
+    @apply relative isolate w-full flex-1 overflow-x-hidden px-4 py-14 pb-20 sm:px-6 sm:py-16;
+  }
+
+  /** Date hero — frosted chip (bouton ou libellé) */
+  .glass-date-pill {
+    @apply mx-auto w-fit max-w-full rounded-xl border border-white/30 bg-white/15 px-3 py-1.5 shadow-sm backdrop-blur-md transition-[background-color,border-color,box-shadow] hover:border-white/45 hover:bg-white/30 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:border-white/18 dark:bg-white/[0.1] dark:hover:border-white/25 dark:hover:bg-white/[0.14];
+  }
 }
 
 .dark {
-  --background: color-mix(
-    in srgb,
-    var(--color-neutral-950) 95%,
-    var(--color-white)
-  );
-  --foreground: var(--color-neutral-100);
-  --card: color-mix(in srgb, var(--background) 98%, var(--color-white));
-  --card-foreground: var(--color-neutral-100);
-  --popover: color-mix(in srgb, var(--background) 98%, var(--color-white));
-  --popover-foreground: var(--color-neutral-100);
-  --primary: var(--color-neutral-100);
-  --primary-foreground: var(--color-neutral-800);
-  --secondary: --alpha(var(--color-white) / 4%);
-  --secondary-foreground: var(--color-neutral-100);
-  --muted: --alpha(var(--color-white) / 4%);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--color-neutral-500) 90%,
-    var(--color-white)
-  );
-  --accent: --alpha(var(--color-white) / 4%);
-  --accent-foreground: var(--color-neutral-100);
-  --destructive: color-mix(
-    in srgb,
-    var(--color-red-500) 90%,
-    var(--color-white)
-  );
-  --destructive-foreground: var(--color-red-400);
-  --info: var(--color-blue-500);
-  --info-foreground: var(--color-blue-400);
-  --success: var(--color-emerald-500);
-  --success-foreground: var(--color-emerald-400);
-  --warning: var(--color-amber-500);
-  --warning-foreground: var(--color-amber-400);
-  --border: --alpha(var(--color-white) / 6%);
-  --input: --alpha(var(--color-white) / 8%);
-  --ring: var(--color-neutral-500);
-  --sidebar: color-mix(
-    in srgb,
-    var(--color-neutral-950) 97%,
-    var(--color-white)
-  );
+  --background: oklch(0.07 0.014 264);
+  --foreground: oklch(0.98 0.005 264);
+  --card: oklch(0.165 0.014 264);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.165 0.014 264);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.63 0.19 264);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.22 0.014 264);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.2 0.012 264);
+  --muted-foreground: oklch(0.62 0.02 264);
+  --accent: oklch(0.24 0.016 264);
+  --accent-foreground: oklch(0.98 0.005 264);
+  --destructive: oklch(0.62 0.18 25);
+  --destructive-foreground: oklch(0.99 0.01 25);
+  --info: oklch(0.58 0.14 264);
+  --info-foreground: oklch(0.99 0 0);
+  --success: oklch(0.68 0.17 155);
+  --success-foreground: oklch(0.12 0.04 155);
+  --warning: oklch(0.78 0.13 78);
+  --warning-foreground: oklch(0.18 0.05 55);
+  --border: oklch(0.34 0.02 264 / 0.45);
+  --input: oklch(0.34 0.02 264 / 0.55);
+  --ring: oklch(0.58 0.16 264);
+  --sidebar: oklch(0.11 0.012 264);
   --sidebar-foreground: color-mix(
-    in srgb,
-    var(--color-neutral-100) 64%,
+    in oklch,
+    var(--foreground) 65%,
     var(--sidebar)
   );
-  --sidebar-primary: var(--color-neutral-100);
-  --sidebar-primary-foreground: var(--color-neutral-800);
-  --sidebar-accent: --alpha(var(--color-white) / 4%);
-  --sidebar-accent-foreground: var(--color-neutral-100);
-  --sidebar-border: --alpha(var(--color-white) / 5%);
-  --sidebar-ring: var(--color-neutral-400);
+  --sidebar-primary: oklch(0.63 0.19 264);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.22 0.014 264);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: oklch(0.32 0.02 264 / 0.4);
+  --sidebar-ring: oklch(0.58 0.16 264);
 }

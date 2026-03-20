@@ -16,7 +16,36 @@
 - Loader : données publiques uniquement (`date`, `imagePath`).
 - Déploiement Vercel : les JSON sous `content/puzzles/` ne sont pas sur le disque serverless ; chargement via `import.meta.glob` dans `src/server/puzzle-registry.ts` pour les embarquer au build.
 
+## Sons feedback (soundcn)
+
+- [x] `npx shadcn@latest add @soundcn/use-sound @soundcn/error-008 @soundcn/confirmation-003`
+- [x] Accueil + archives : confirmation sur bonne réponse, erreur sur mauvaise réponse ou échec réseau
+
+### Review
+
+- Build + tests OK après intégration.
+
+## Blocage devinettes futures (serveur)
+
+- [x] `listReleasedPuzzleDates` / `isPuzzleDateReleased` (calendrier Europe/Paris)
+- [x] `resolvePuzzleDateForPlay` sans fallback « dernière du repo » si tout est futur
+- [x] `getPuzzleByDate`, `listAvailableDates`, `submitGuess` alignés
+
+### Review
+
+- `pnpm test` + `tsc --noEmit` OK.
+
 ## Suite possible
 
 - [ ] GitHub Action cron + API image (hors MVP)
 - [ ] Hébergement (Vercel / Cloudflare)
+
+## Page Archives (mars 2026)
+
+- [x] Date par défaut : veille (Paris), avec repli si pas de fichier ce jour-là
+- [x] Layout aligné sur l’accueil : overline « Archives », date en `type-date-hero` cliquable
+- [x] Modale calendrier : aperçu image par jour avec devinette + indicateur résolu (localStorage)
+
+### Review
+
+- `pnpm exec tsc --noEmit`, `pnpm build`, `pnpm test` OK.

@@ -1,24 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, redirect } from "@tanstack/react-router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getUiState } from "@bearstudio/ui-state";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CalendarIcon, CircleCheckIcon, ChevronLeftIcon } from "lucide-react";
+import { ChevronDownIcon, CircleCheckIcon } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
-import { submitGuess as submitGuessFn } from "#/server/puzzle-fns";
+import {
+  listAvailableDates,
+  submitGuess as submitGuessFn,
+} from "#/server/puzzle-fns";
+import { pickDefaultArchiveDate } from "#/lib/archive-default-date";
 import {
   availableDatesQueryOptions,
   puzzleByDateQueryOptions,
 } from "#/lib/puzzle-queries";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverPopup, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  ARCHIVES_LOADING_MESSAGES,
+  LoadingPuzzleHint,
+} from "@/components/loading-puzzle-hint";
+import { PuzzleImage } from "@/components/puzzle-image";
+import { ArchiveCalendarModal } from "@/components/archive-calendar-modal";
 import { useSound } from "@/hooks/use-sound";
 import { confirmation003Sound } from "@/lib/confirmation-003";
 import { error008Sound } from "@/lib/error-008";
@@ -32,6 +40,12 @@ export const Route = createFileRoute("/archives")({
     const parsed = new Date(s + "T12:00:00");
     if (Number.isNaN(parsed.getTime())) return {};
     return { date: s };
+  },
+  beforeLoad: async ({ search }) => {
+    if (search.date) return;
+    const dates = await listAvailableDates();
+    const d = pickDefaultArchiveDate(dates);
+    if (d) throw redirect({ to: "/archives", search: { date: d } });
   },
   component: ArchivesPage,
 });
@@ -72,7 +86,7 @@ function ArchivesPage() {
   const navigate = useNavigate();
   const { date: dateParam } = Route.useSearch();
 
-  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const isoDate = dateParam ?? undefined;
   const selectedDate = isoDate ? new Date(isoDate + "T12:00:00") : undefined;
@@ -104,16 +118,11 @@ function ArchivesPage() {
     },
   });
 
-  const handleOpenChange = (open: boolean) => {
-    setPopoverOpen(open);
-  };
-
   const handleSelectDate = (date: Date | undefined) => {
     navigate({
       to: "/archives",
       search: date ? { date: format(date, "yyyy-MM-dd") } : {},
     });
-    setPopoverOpen(false);
     setGuess("");
     submitMutation.reset();
   };
@@ -151,61 +160,64 @@ function ArchivesPage() {
   });
 
   return (
-    <main className="mx-auto w-full max-w-4xl px-4 pb-16 pt-12 sm:pt-14">
-      <div className="mx-auto max-w-lg">
-        <div className="mb-8 flex items-center justify-between gap-4">
-          <p className="text-[12px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Archives
-          </p>
-          <Popover open={popoverOpen} onOpenChange={handleOpenChange}>
-            <PopoverTrigger>
-              <Button
-                className="w-fit justify-start text-left font-normal sm:w-[280px]"
-                variant="outline"
-              >
-                <CalendarIcon aria-hidden className="size-4 opacity-80" />
-                {selectedDate ? (
-                  format(selectedDate, "PPP", { locale: fr })
-                ) : (
-                  <span>Choisir une date</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverPopup align="start" className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={handleSelectDate}
-                defaultMonth={selectedDate ?? maxDate ?? minDate ?? new Date()}
-                disabled={(d) =>
-                  (availableDatesQuery.data?.length ?? 0) > 0 &&
-                  !availableDatesQuery.data?.includes(format(d, "yyyy-MM-dd"))
-                }
-                fromDate={minDate}
-                toDate={maxDate}
+    <main className="page-atmosphere mx-auto w-full max-w-4xl">
+      <div className="content-panel min-w-0">
+        <p className="type-overline mb-2 text-center">Archives</p>
+        <p className="mb-8 text-center">
+          {isoDate ? (
+            <button
+              type="button"
+              className="type-date-hero glass-date-pill inline-flex cursor-pointer items-center gap-2"
+              aria-haspopup="dialog"
+              aria-expanded={calendarOpen}
+              aria-label={`Choisir une autre date. ${formatDisplayDate(isoDate)}`}
+              onClick={() => setCalendarOpen(true)}
+            >
+              <span>{formatDisplayDate(isoDate)}</span>
+              <ChevronDownIcon
+                className={`size-4 shrink-0 text-muted-foreground transition-transform duration-200 ${calendarOpen ? "rotate-180" : ""}`}
+                aria-hidden
               />
-            </PopoverPopup>
-          </Popover>
-        </div>
+            </button>
+          ) : (
+            <span className="type-date-hero text-muted-foreground">—</span>
+          )}
+        </p>
+
+        <ArchiveCalendarModal
+          open={calendarOpen}
+          onOpenChange={setCalendarOpen}
+          selectedDate={selectedDate}
+          availableDates={availableDatesQuery.data}
+          minDate={minDate}
+          maxDate={maxDate}
+          onSelectDate={handleSelectDate}
+          isDateSolved={isDateSolved}
+        />
 
         {ui
           .match("no-date", () => (
-            <div className="mx-auto mb-8 flex aspect-square max-w-sm items-center justify-center overflow-hidden rounded-2xl border border-dashed border-border bg-muted/50 sm:max-w-[400px]">
-              <p className="text-sm text-muted-foreground">Choisis une date</p>
+            <div className="puzzle-frame-empty">
+              <p className="type-body-muted-sm px-4 text-center">
+                Aucune devinette publiée pour le moment.
+              </p>
             </div>
           ))
           .match("loading", () => (
             <>
+              <div className="mb-6 flex justify-center">
+                <LoadingPuzzleHint messages={ARCHIVES_LOADING_MESSAGES} />
+              </div>
               <Skeleton className="mx-auto mb-4 h-4 w-40" />
-              <div className="mx-auto mb-8 aspect-square max-w-sm overflow-hidden rounded-2xl sm:max-w-[400px]">
-                <Skeleton className="h-full w-full" />
+              <div className="puzzle-frame">
+                <Skeleton className="size-full" />
               </div>
               <div className="mx-auto flex max-w-md flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-11 w-full rounded-lg sm:h-10" />
+                  <Skeleton className="h-11 w-full rounded-2xl sm:h-10" />
                 </div>
-                <Skeleton className="mt-1 h-10 w-full rounded-lg" />
+                <Skeleton className="mt-1 h-10 w-full rounded-full" />
               </div>
             </>
           ))
@@ -225,29 +237,23 @@ function ArchivesPage() {
             </Alert>
           ))
           .match("success", ({ puzzle }) => (
-            <>
-              <p className="mb-4 text-center text-sm text-muted-foreground">
-                <span className="font-medium capitalize text-foreground">
-                  {formatDisplayDate(puzzle.date)}
-                </span>
-              </p>
-              <div className="mx-auto mb-8 aspect-square max-w-sm overflow-hidden rounded-2xl border border-border/80 bg-muted ring-1 ring-black/5 sm:max-w-[400px]">
-                <img
+            <div className="motion-safe:animate-success-pop motion-reduce:animate-none">
+              <div className="puzzle-frame">
+                <PuzzleImage
                   src={puzzle.imagePath}
                   alt="Indice visuel pour la devinette"
-                  className="h-full w-full object-cover"
-                  width={400}
-                  height={400}
+                  fetchPriority="high"
+                  loading="eager"
                 />
               </div>
               <Alert variant="success" className="mb-8">
                 <CircleCheckIcon aria-hidden className="size-4 shrink-0" />
-                <AlertTitle>Bravo — bonne réponse !</AlertTitle>
+                <AlertTitle>Chapeau — c'est la bonne réponse !</AlertTitle>
                 <AlertDescription>
                   Tu as déjà trouvé cette devinette.
                 </AlertDescription>
               </Alert>
-            </>
+            </div>
           ))
           .match("wrong", ({ puzzle }) => (
             <ArchivesPuzzleForm
@@ -271,13 +277,14 @@ function ArchivesPage() {
           ))
           .exhaustive()}
 
-        <p className="mt-10 text-center">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ChevronLeftIcon aria-hidden className="size-4" />
+        <p className="type-body-muted-sm mx-auto mt-10 max-w-[42ch] text-balance text-center">
+          Trouve le jeu de mots sur le nom de la célébrité à partir de l'image.
+          Rattrape les devinettes qui t'ont échappées en parcourant les archives.
+        </p>
+        <p className="mt-6 text-center">
+          <Link to="/" className="type-link-subtle">
             <span>Retour à l'accueil</span>
+            <span aria-hidden>→</span>
           </Link>
         </p>
       </div>
@@ -307,25 +314,19 @@ function ArchivesPuzzleForm({
 }) {
   return (
     <>
-      <p className="mb-4 text-center text-sm text-muted-foreground">
-        <span className="font-medium capitalize text-foreground">
-          {formatDisplayDate(puzzle.date)}
-        </span>
-      </p>
-      <div className="mx-auto mb-8 aspect-square max-w-sm overflow-hidden rounded-2xl border border-border/80 bg-muted ring-1 ring-black/5 sm:max-w-[400px]">
-        <img
+      <div className="puzzle-frame">
+        <PuzzleImage
           src={puzzle.imagePath}
           alt="Indice visuel pour la devinette"
-          className="h-full w-full object-cover"
-          width={400}
-          height={400}
+          fetchPriority="high"
+          loading="eager"
         />
       </div>
       <form
         onSubmit={onSubmit}
         className="mx-auto flex max-w-md flex-col gap-4"
       >
-        <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+        <label className="type-label flex flex-col gap-2">
           Ta réponse
           <Input
             nativeInput
@@ -343,7 +344,7 @@ function ArchivesPuzzleForm({
         {variant === "wrong" && (
           <Alert variant="warning">
             <AlertDescription>
-              Ce n'est pas ça — encore un essai ?
+              Pas cette fois — un autre essai ?
             </AlertDescription>
           </Alert>
         )}
@@ -361,7 +362,7 @@ function ArchivesPuzzleForm({
           loading={submitMutation.isPending}
           className="mt-1"
         >
-          {submitMutation.isPending ? "Vérification…" : "Valider"}
+          {submitMutation.isPending ? "Vérification de ta réponse…" : "Valider"}
         </Button>
       </form>
     </>

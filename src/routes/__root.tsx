@@ -54,7 +54,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="flex min-h-screen flex-col font-sans antialiased [overflow-wrap:anywhere] selection:bg-primary/20 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+      <body className="min-h-dvh bg-background font-sans text-base leading-normal antialiased [overflow-wrap:anywhere] selection:bg-primary/20 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
         <QueryClientProvider client={queryClient}>
           <a
             href="#main"
@@ -62,11 +62,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           >
             Aller au contenu
           </a>
-          <Header />
-          <div id="main" className="flex-1" tabIndex={-1}>
-            {children}
+          <div className="app-shell">
+            <Header />
+            <div id="main" className="flex min-h-0 flex-1 flex-col" tabIndex={-1}>
+              {children}
+            </div>
+            <Footer />
           </div>
-          <Footer />
         </QueryClientProvider>
         <TanStackDevtools
           config={{
