@@ -23,6 +23,8 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
 - **Nationalités et horizons** : ne pas tout centrer sur une seule scène nationale ; inclure des personnalités **internationales** lorsque le public francophone peut raisonnablement **reconnaître** la figure ou résoudre le jeu de mots.
 - **Suivi** : avant de figer une idée, **parcourir les puzzles récents** dans `content/puzzles/` pour limiter les **répétitions** du même type (ex. trois acteurs français d’affilée) ou du même registre.
 
+**Créativité (célébrités + jeux de mots)** : élargir volontairement les registres et les angles **dans le cadre** du produit — personnalités publiques identifiables, homophones / quasi-homophones sur le **son** du nom, scène et ressemblance cohérentes. Pas de traduction de sens du patronyme ; pas d’idée opaque pour la « blague ». Détail : section **Créativité : élargir les possibilités** dans `docs/puzzle-generation-rules.md`.
+
 ## Fichiers à produire (par jour)
 
 1. **JSON** : `content/puzzles/YYYY-MM-DD.json` avec les champs :

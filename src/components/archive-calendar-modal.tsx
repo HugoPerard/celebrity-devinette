@@ -145,7 +145,7 @@ export function ArchiveCalendarModal({
         <DialogPopup
           showCloseButton
           bottomStickOnMobile
-          className="flex max-sm:max-h-[min(96dvh,48rem)] w-[100vw] flex-col border-white/30 p-0 dark:border-white/18"
+          className="flex max-sm:max-h-[min(96dvh,48rem)] min-w-0 flex-col border-white/30 p-0 dark:border-white/18"
         >
           <DialogHeader>
             <DialogTitle>Choisir une date</DialogTitle>

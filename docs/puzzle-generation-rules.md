@@ -16,6 +16,30 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
 - **Nationalités et horizons** : ne pas tout centrer sur une seule scène nationale ; inclure des personnalités **internationales** lorsque le public francophone peut raisonnablement **reconnaître** la figure ou résoudre le jeu de mots.
 - **Suivi** : avant de figer une idée, **parcourir les puzzles récents** dans `content/puzzles/` pour limiter les **répétitions** du même type (ex. trois acteurs français d’affilée) ou du même registre.
 
+## Créativité : élargir les possibilités (sans perdre la cohérence)
+
+Le format reste **célébrité publique + jeu de mots sur le patronyme + scène illustrée + forte ressemblance**. Dans ce cadre, **être imaginatif** : varier les angles pour éviter la routine, tout en gardant une **chaîne lisible** pour le joueur.
+
+### Célébrités
+
+- Rester sur des **personnalités publiques réelles**, identifiables par le public cible (voir **Ressemblance**).
+- **Élargir volontairement** les registres au fil des semaines : cinéma, séries, musique (FR / international quand le nom traverse les frontières), sport, télé, humour, réseaux, auteurs ou intellectuels « grand public », etc.
+- Une figure peut être **peu photographiée** si son **nom** et un **trait visuel** (costume, silhouette, accessoire iconique) suffisent à l’identification — mais éviter les noms **trop obscurs** ou les niches sans ancrage culturel partagé.
+- **Cohérence** : la célébrité choisie doit **porter** le jeu de mots (le patronyme offre une prise phonétique ou une déformation crédible, pas un collage forcé).
+
+### Jeux de mots
+
+- Le cœur du dispositif reste : **homophone ou quasi-homophone** sur le **son** du nom (voir aussi **Traductions du patronyme** plus bas).
+- **Étendre le registre** tant que c’est défendable à l’oral :
+  - **Quasi-homophones** et **assonances** marquées (pas seulement une syllabe rigide).
+  - **Ponts** entre langues lorsque le nom ou la carrière le suggèrent (ex. jeu **sonore** sur un nom anglophone), sans retomber dans la **traduction de sens** du patronyme.
+  - Patronyme rendu en **plusieurs mots** dans la réponse si le tout reste **saisissable**, vérifiable avec `normalizeGuess`, et mémorisable.
+- **Imagination oui, gratuité non** : si la déformation est trop opaque ou la scène ne « colle » pas au nom modifié, **changer d’idée**.
+
+### Filtre de validation (une seule devinette = une lecture)
+
+Vérifier mentalement : *« Je reconnais la figure ; le nom modifié sonne comme un calembour ; la scène illustre ce sens — les trois se renforcent. »* Si l’un des maillons casse, **revenir à une variante plus simple** plutôt qu’empiler les trouvailles.
+
 ## Fichiers à produire (par jour)
 
 1. **JSON** : `content/puzzles/YYYY-MM-DD.json` avec les champs :
