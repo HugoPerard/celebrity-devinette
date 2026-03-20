@@ -19,6 +19,9 @@ import { Popover, PopoverPopup, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSound } from "@/hooks/use-sound";
+import { confirmation003Sound } from "@/lib/confirmation-003";
+import { error008Sound } from "@/lib/error-008";
 
 export const Route = createFileRoute("/archives")({
   validateSearch: (search: Record<string, unknown>): { date?: string } => {
@@ -81,6 +84,8 @@ function ArchivesPage() {
   });
 
   const [guess, setGuess] = useState("");
+  const [playSuccess] = useSound(confirmation003Sound);
+  const [playError] = useSound(error008Sound);
   const submitMutation = useMutation({
     mutationFn: async ({ date, guess }: { date: string; guess: string }) => {
       const result = await submitGuess({ data: { date, guess } });
@@ -89,7 +94,13 @@ function ArchivesPage() {
     onSuccess: (data) => {
       if (data.ok) {
         markDateSolved(data.date);
+        playSuccess();
+      } else {
+        playError();
       }
+    },
+    onError: () => {
+      playError();
     },
   });
 

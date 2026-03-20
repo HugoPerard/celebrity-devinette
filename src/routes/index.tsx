@@ -10,6 +10,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useSound } from "@/hooks/use-sound";
+import { confirmation003Sound } from "@/lib/confirmation-003";
+import { error008Sound } from "@/lib/error-008";
 
 const STORAGE_KEY = "puzzle-solved";
 
@@ -63,6 +66,8 @@ function Home() {
   const submitGuess = useServerFn(submitGuessFn);
   const [guess, setGuess] = useState("");
   const [solvedFromStorage, setSolvedFromStorage] = useState(false);
+  const [playSuccess] = useSound(confirmation003Sound);
+  const [playError] = useSound(error008Sound);
 
   useLayoutEffect(() => {
     if (puzzleQuery.data && isDateSolved(puzzleQuery.data.date)) {
@@ -78,7 +83,13 @@ function Home() {
     onSuccess: (data) => {
       if (data.ok) {
         markDateSolved(data.date);
+        playSuccess();
+      } else {
+        playError();
       }
+    },
+    onError: () => {
+      playError();
     },
   });
 
