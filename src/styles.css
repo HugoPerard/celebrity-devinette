@@ -168,9 +168,24 @@
   /**
    * Puzzle image — shared frame. `w-full` + `aspect-square` reserves space before decode
    * (matches 400×400 assets, see `PUZZLE_IMAGE_SIZE`).
+   * `relative` + absolutely positioned `img` avoids aspect-ratio bugs from mixing HTML
+   * width/height attributes with utility classes (horizontal squash/stretch).
    */
   .puzzle-frame {
-    @apply mx-auto mb-8 aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-border bg-muted ring-1 ring-black/5 motion-safe:animate-image-settle motion-reduce:animate-none sm:max-w-[min(100%,26rem)] dark:bg-card dark:ring-white/10;
+    @apply relative mx-auto mb-8 aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-border bg-muted ring-1 ring-black/5 motion-safe:animate-image-settle motion-reduce:animate-none sm:max-w-[min(100%,26rem)] dark:bg-card dark:ring-white/10;
+  }
+
+  /**
+   * Uniform scale to fill the square, center crop if aspect ratios differ — never stretch
+   * (object-cover, not fill / not squashing).
+   */
+  .puzzle-frame > img {
+    @apply absolute inset-0 block size-full object-cover object-center;
+  }
+
+  /** Calendar day preview — same as main puzzle (crop, no distortion). */
+  .puzzle-calendar-thumb {
+    @apply absolute inset-0 block size-full object-cover object-center;
   }
 
   /** Empty / picker placeholder — same footprint as `.puzzle-frame`, no layout jump */

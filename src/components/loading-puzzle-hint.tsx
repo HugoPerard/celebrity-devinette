@@ -8,13 +8,6 @@ const DEFAULT_MESSAGES = [
   "Synchronisation sur l'heure de Paris…",
 ] as const;
 
-/** Messages pour l'écran de chargement des archives */
-export const ARCHIVES_LOADING_MESSAGES = [
-  "Chargement de l'énigme sélectionnée…",
-  "Mise à jour du calendrier…",
-  "Récupération de l'image-indice…",
-] as const;
-
 export function LoadingPuzzleHint({
   messages = DEFAULT_MESSAGES,
 }: {

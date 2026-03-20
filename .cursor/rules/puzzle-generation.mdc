@@ -28,7 +28,7 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
 1. **JSON** : `content/puzzles/YYYY-MM-DD.json` avec les champs :
    - `date` : même chaîne que le nom de fichier.
    - `imagePath` : URL statique commençant par `/puzzles/` (fichier sous `public/puzzles/`).
-   - `answerNormalized` : version **avec le jeu de mot** (prénom + nom modifié), normalisée comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `edouard bear` pour Édouard Baer, `pierre riche` pour Pierre Richard, `dany boue` pour Dany Boon, `vincent dindon` pour Vincent Lindon, `johnny holiday` pour Johnny Hallyday).
+   - `answerNormalized` : version **avec le jeu de mot** (prénom + nom modifié), normalisée comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `edouard bear` pour Édouard Baer, `pierre riche` pour Pierre Richard, `dany boue` pour Dany Boon, `vincent dindon` pour Vincent Lindon, `johnny holiday` pour Johnny Hallyday, `lionel messy` pour Lionel Messi → Lionel Messy).
    - `celebrityPublicName` (optionnel) : pour notes internes / PR, pas affiché par l’app.
 
 2. **Image** : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (raster uniquement — **pas de SVG**), **400×400 pixels**, **contenu en plein cadre** (l’illustration remplit tout le carré, **sans bordure**, sans marge décorative, sans bandes letterbox/pillarbox) — référencée par `imagePath`.
@@ -37,18 +37,20 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
 
 ### Format
 
-- **Dimensions** : **exactement 400×400** pixels (carré).
-- **Plein cadre** : le dessin / la scène occupe **tout le carré** jusqu’aux bords — **pas de cadre**, **pas de passe-partout**, **pas de bandes** (noir ou autre) autour du sujet, **pas d’ombre portée « carte postale »** qui réduit la zone utile. Si l’image générée n’est pas carrée ou comporte des marges, **recadrer ou redimensionner** pour obtenir un fichier **400×400** à contenu maximal.
+- **Dimensions** : **exactement 400×400** pixels (carré) dans `public/puzzles/`.
+- **Plein cadre** : le dessin / la scène occupe **tout le carré** jusqu’aux bords — **pas de cadre**, **pas de passe-partout**, **pas de bandes** (noir ou autre) autour du sujet, **pas d’ombre portée « carte postale »** qui réduit la zone utile.
+- **Export final obligatoire (toutes les images)** : après génération, toujours `pnpm puzzle:export -- <source> public/puzzles/YYYY-MM-DD.png` (ImageMagick `magick` requis) — par défaut **trim anti-bandes** (`-fuzz 15% -trim`) puis échelle uniforme + crop centré ; **interdit** `sips -z 400 400` sur une source non carrée (déforme). Détail : `docs/puzzle-generation-rules.md` § *Export final 400×400*.
 
 ### Principe du jeu de mot
 
-Le jeu de mot repose sur une **modification du nom de famille** de la célébrité pour produire un homophone ou quasi-homophone avec un sens différent (ex. : Michel Sardou → Michel Sardine, Pierre Richard → Pierre Riche, Dany Boon → Dany Boue, Vincent Lindon → Vincent Dindon, Johnny Hallyday → Johnny Holiday).
+Le jeu de mot repose sur une **modification du nom de famille** de la célébrité pour produire un homophone ou quasi-homophone avec un sens différent (ex. : Michel Sardou → Michel Sardine, Pierre Richard → Pierre Riche, Dany Boon → Dany Boue, Vincent Lindon → Vincent Dindon, Johnny Hallyday → Johnny Holiday, Lionel Messi → Lionel Messy).
 
 **À éviter :**
 
 - Scène purement littérale sans modification du nom (ex. : Tom Cruise sur un bateau de croisière)
 - Calembour visuel sans transformation du patronyme
 - Décomposition du nom en mots existants sans vrai jeu de mot (ex. : Jean Dujardin dans un jardin — « du jardin » = sens littéral du patronyme, pas d'homophone créatif)
+- **Will Smith → Will Forgeron** : jeu sur le **sens** du mot anglais *smith* (forgeron) avec une réponse en français, sans **déformation homophone** du patronyme (le nom *Smith* ne devient pas un autre mot sonore en français) — **hors format** ; voir `docs/puzzle-generation-rules.md`.
 
 ### Aucun texte
 
@@ -56,7 +58,7 @@ L’image ne doit **jamais** contenir de texte qui donne la réponse : pas de mo
 
 ### Illustration claire
 
-La scène illustre le **sens du nom modifié** (ex. : Michel Sardine → entouré de sardines, Dany Boue → personnage dans la boue, Vincent Dindon → entouré de dindons, Johnny Holiday → en vacances à la plage). Privilégier des concepts **concrets et facilement illustrables** — éviter les abstractions (longueur, neuf, etc.).
+La scène illustre le **sens du nom modifié** (ex. : Michel Sardine → entouré de sardines, Dany Boue → personnage dans la boue, Vincent Dindon → entouré de dindons, Johnny Holiday → en vacances à la plage, Lionel Messy → scène de désordre / bazar). Privilégier des concepts **concrets et facilement illustrables** — éviter les abstractions (longueur, neuf, etc.).
 
 ### Ressemblance avec la célébrité (priorité)
 

@@ -22,7 +22,6 @@ import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  ARCHIVES_LOADING_MESSAGES,
   LoadingPuzzleHint,
 } from "@/components/loading-puzzle-hint";
 import { PuzzleImage } from "@/components/puzzle-image";
@@ -205,10 +204,6 @@ function ArchivesPage() {
           ))
           .match("loading", () => (
             <>
-              <div className="mb-6 flex justify-center">
-                <LoadingPuzzleHint messages={ARCHIVES_LOADING_MESSAGES} />
-              </div>
-              <Skeleton className="mx-auto mb-4 h-4 w-40" />
               <div className="puzzle-frame">
                 <Skeleton className="size-full" />
               </div>

@@ -1,9 +1,6 @@
 import type * as React from "react";
 import { cn } from "@/lib/utils";
-import {
-  PUZZLE_IMAGE_SIZE,
-  PUZZLE_IMAGE_SIZES,
-} from "@/lib/puzzle-image";
+import { PUZZLE_IMAGE_SIZES } from "@/lib/puzzle-image";
 
 type PuzzleImageProps = {
   src: string;
@@ -30,13 +27,11 @@ export function PuzzleImage({
       {...props}
       src={src}
       alt={alt}
-      width={PUZZLE_IMAGE_SIZE}
-      height={PUZZLE_IMAGE_SIZE}
       sizes={PUZZLE_IMAGE_SIZES}
       decoding="async"
       fetchPriority={fetchPriority}
       loading={loading}
-      className={cn("block h-full w-full object-cover", className)}
+      className={cn("block", className)}
     />
   );
 }

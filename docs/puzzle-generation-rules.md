@@ -21,7 +21,7 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
 1. **JSON** : `content/puzzles/YYYY-MM-DD.json` avec les champs :
    - `date` : même chaîne que le nom de fichier.
    - `imagePath` : URL statique commençant par `/puzzles/` (fichier sous `public/puzzles/`).
-   - `answerNormalized` : version **avec le jeu de mot** (prénom + nom modifié), normalisée comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `edouard bear` pour Édouard Baer, `pierre riche` pour Pierre Richard, `dany boue` pour Dany Boon, `vincent dindon` pour Vincent Lindon, `johnny holiday` pour Johnny Hallyday).
+   - `answerNormalized` : version **avec le jeu de mot** (prénom + nom modifié), normalisée comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `edouard bear` pour Édouard Baer, `pierre riche` pour Pierre Richard, `dany boue` pour Dany Boon, `vincent dindon` pour Vincent Lindon, `johnny holiday` pour Johnny Hallyday, `lionel messy` pour Lionel Messi → Lionel Messy).
    - `celebrityPublicName` (optionnel) : pour notes internes / PR, pas affiché par l'app.
 
 2. **Image** : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (raster uniquement — **pas de SVG**), **400×400 pixels**, **contenu en plein cadre** (l’illustration remplit tout le carré, **sans bordure**, sans marge décorative, sans bandes letterbox/pillarbox) — référencée par `imagePath`.
@@ -30,18 +30,32 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
 
 ### Format
 
-- **Dimensions** : **exactement 400×400** pixels (carré).
-- **Plein cadre** : le dessin / la scène occupe **tout le carré** jusqu’aux bords — **pas de cadre**, **pas de passe-partout**, **pas de bandes** (noir ou autre) autour du sujet, **pas d’ombre portée « carte postale »** qui réduit la zone utile. Si l’image générée n’est pas carrée ou comporte des marges, **recadrer ou redimensionner** pour obtenir un fichier **400×400** à contenu maximal.
+- **Dimensions** : **exactement 400×400** pixels (carré) dans le dépôt (`public/puzzles/`).
+- **Plein cadre** : le dessin / la scène occupe **tout le carré** jusqu’aux bords — **pas de cadre**, **pas de passe-partout**, **pas de bandes** (noir ou autre) autour du sujet, **pas d’ombre portée « carte postale »** qui réduit la zone utile.
+
+### Export final 400×400 (obligatoire — toutes les images)
+
+Après toute génération ou retouche (IA, export outil, etc.), **toujours** produire le fichier livré via **échelle uniforme + recadrage centré** (« object-fit: cover »), **jamais** en étirant un rectangle vers un carré.
+
+1. **Commande du dépôt** (recommandé) : `pnpm puzzle:export -- <fichier_source> public/puzzles/YYYY-MM-DD.png`  
+   - Nécessite **ImageMagick** (`magick` dans le PATH, ex. `brew install imagemagick` sur macOS).  
+   - Le script applique par défaut **`-fuzz 15% -trim`** pour retirer les **bandes** letterbox/pillarbox uniformes, puis le **cover** 400×400. Désactiver le trim : `PUZZLE_EXPORT_TRIM_FUZZ=` (vide).
+2. **Équivalent manuel** : `magick in.png -fuzz 15% -trim +repage -resize 400x400^ -gravity center -extent 400x400 out.png`  
+   - Le `^` signifie : couvrir au moins 400×400 à ratio constant, puis `-extent` rogne le surplus au centre.
+3. **Interdit** pour passer d’un rectangle au carré 400×400 : `sips -z 400 400` (ou tout outil qui **déforme** l’image pour remplir le carré).
+
+Le prompt peut demander un visuel large ou carré ; **l’étape d’export** est la même à chaque fois. Variable optionnelle : `PUZZLE_EXPORT_SIZE` (défaut `400`) si le script doit cibler une autre taille — l’app attend **400×400** (`PUZZLE_IMAGE_SIZE`).
 
 ### Principe du jeu de mot
 
-Le jeu de mot repose sur une **modification du nom de famille** de la célébrité pour produire un homophone ou quasi-homophone avec un sens différent (ex. : Michel Sardou → Michel Sardine, Pierre Richard → Pierre Riche, Dany Boon → Dany Boue, Vincent Lindon → Vincent Dindon, Johnny Hallyday → Johnny Holiday).
+Le jeu de mot repose sur une **modification du nom de famille** de la célébrité pour produire un homophone ou quasi-homophone avec un sens différent (ex. : Michel Sardou → Michel Sardine, Pierre Richard → Pierre Riche, Dany Boon → Dany Boue, Vincent Lindon → Vincent Dindon, Johnny Hallyday → Johnny Holiday, Lionel Messi → Lionel Messy).
 
 **À éviter :**
 
 - Scène purement littérale sans modification du nom (ex. : Tom Cruise sur un bateau de croisière)
 - Calembour visuel sans transformation du patronyme
 - Décomposition du nom en mots existants sans vrai jeu de mot (ex. : Jean Dujardin dans un jardin — « du jardin » = sens littéral du patronyme, pas d’homophone créatif)
+- **Will Smith → Will Forgeron** : jeu sur le **sens** du mot anglais *smith* (forgeron) avec une « réponse » en français, sans **déformation homophone** du patronyme comme dans les bons exemples (le nom *Smith* ne devient pas un autre mot sonore en français) — **hors format**.
 
 ### Aucun texte
 
@@ -49,7 +63,7 @@ L'image ne doit **jamais** contenir de texte qui donne la réponse : pas de mots
 
 ### Illustration claire
 
-La scène illustre le **sens du nom modifié** (ex. : Michel Sardine → entouré de sardines, Dany Boue → personnage dans la boue, Vincent Dindon → entouré de dindons, Johnny Holiday → en vacances à la plage). Privilégier des concepts **concrets et facilement illustrables** — éviter les abstractions (longueur, neuf, etc.).
+La scène illustre le **sens du nom modifié** (ex. : Michel Sardine → entouré de sardines, Dany Boue → personnage dans la boue, Vincent Dindon → entouré de dindons, Johnny Holiday → en vacances à la plage, Lionel Messy → scène de désordre / bazar). Privilégier des concepts **concrets et facilement illustrables** — éviter les abstractions (longueur, neuf, etc.).
 
 ### Ressemblance avec la célébrité (priorité)
 
@@ -78,7 +92,7 @@ Composition soignée, cadrage cinématographique, éclairage cohérent, style ad
 
 ```
 Portrait ou buste : [prénom utilisé pour le jeu de mots] — RESSEMBLANCE : [trait 1], [trait 2], [trait 3], [trait 4] (voir célébrité réelle). [Situation / accessoires illustrant le nom modifié]. [Ambiance, éclairage]. Style semi-réaliste : peinture digitale de portrait, éclairage réaliste, traits reconnaissables et intentionnellement proches du modèle public, pas une photographie ni un photoréalisme de studio.
-CRITIQUE : AUCUN texte — pas de mots, lettres, bulles, légendes, étiquettes lisibles. Visuel pur uniquement. Carré 400x400 plein cadre — illustration edge-to-edge, sans bordure ni bandes.
+CRITIQUE : AUCUN texte — pas de mots, lettres, bulles, légendes, étiquettes lisibles. Visuel pur uniquement. Composition lisible en cadrage serré ; le livrable final passera par l’export 400×400 « cover » (voir § Export final) — pas besoin que le fichier brut soit déjà carré.
 ```
 
 ## Fuseau horaire

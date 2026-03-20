@@ -32,6 +32,9 @@ pnpm preview
 | `docs/automation-daily-puzzle.md` | Checklist publication quotidienne                                        |
 | `docs/puzzle-generation-rules.md` | Règles de génération (automations Cursor)                                |
 | `docs/automation-prompt.md`      | Prompt à coller dans Cursor Automations                                  |
+| `scripts/puzzle-square-export.sh` | Export **400×400** sans déformation (crop « cover ») — `pnpm puzzle:export` |
+
+**Images puzzle** : après génération (tout ratio), exécuter `pnpm puzzle:export -- <source> public/puzzles/YYYY-MM-DD.png` (ImageMagick `magick` requis) — trim des bandes + crop « cover » 400×400. Voir `docs/puzzle-generation-rules.md` § *Export final 400×400*.
 
 ## Tests
 
@@ -43,7 +46,7 @@ pnpm test
 
 Fichiers `2026-03-19` et `2025-03-19` dans `content/puzzles/` (la page d’accueil affiche la devinette pour la date du jour à Paris si elle existe, sinon la plus récente **dont la date calendaire est déjà passée ou égale à aujourd’hui** — les fichiers datés dans le futur ne sont pas exposés côté serveur).
 
-Réponses pour tester : `jean dujardin` / `marion cotillard`.
+Réponses pour tester : `jean dujardin` / `marion cotillard` / `lionel messy` (Lionel Messi → Lionel Messy).
 
 ## Déploiement
 

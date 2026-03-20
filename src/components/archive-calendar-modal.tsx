@@ -57,7 +57,7 @@ function ArchiveDayButtonInner(props: ArchiveDayButtonProps) {
         <img
           src={puzzlePreviewSrc(iso)}
           alt=""
-          className="size-full object-cover"
+          className="puzzle-calendar-thumb"
           loading="lazy"
           decoding="async"
         />
