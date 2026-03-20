@@ -1,27 +1,8 @@
-import { readdir } from 'node:fs/promises'
-import { join } from 'node:path'
 import { getCalendarDateInParis } from '#/lib/puzzle-constants'
-
-export function puzzlesDir(): string {
-  return join(process.cwd(), 'content/puzzles')
-}
-
-function isIsoDate(s: string): boolean {
-  return /^\d{4}-\d{2}-\d{2}$/.test(s)
-}
+import { listPuzzleDatesFromRegistry } from '#/server/puzzle-registry'
 
 export async function listPuzzleDates(): Promise<string[]> {
-  let files: string[] = []
-  try {
-    files = await readdir(puzzlesDir())
-  } catch {
-    return []
-  }
-  return files
-    .filter((f) => f.endsWith('.json'))
-    .map((f) => f.slice(0, -5))
-    .filter(isIsoDate)
-    .sort()
+  return listPuzzleDatesFromRegistry()
 }
 
 /**
