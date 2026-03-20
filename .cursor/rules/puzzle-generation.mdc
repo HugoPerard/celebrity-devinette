@@ -11,7 +11,7 @@ alwaysApply: false
 ## Contenu
 
 - **Pas** de contenu haineux, diffamatoire, ni d’imitation trompeuse de personnes réelles au-delà d’un jeu de mots léger (respecter le cadre légal / éthique du produit).
-- La devinette doit être un **jeu de mots** ou indice visuel **abstrait** (éviter portrait photo-réaliste reconnaissable si politique produit = pas de likeness).
+- La devinette doit être un **jeu de mots** avec indice visuel **concret** ; l’illustration stylisée doit **fortement évoquer** la personnalité publique (voir section ressemblance dans `docs/puzzle-generation-rules.md`), sans photo de presse ni rendu trompeur type deepfake.
 - **Langue** : indices et métadonnées en français, sauf exception documentée.
 
 ## Fichiers à produire (par jour)
@@ -48,25 +48,28 @@ L’image ne doit **jamais** contenir de texte qui donne la réponse : pas de mo
 
 La scène illustre le **sens du nom modifié** (ex. : Michel Sardine → entouré de sardines, Dany Boue → personnage dans la boue, Vincent Dindon → entouré de dindons, Johnny Holiday → en vacances à la plage). Privilégier des concepts **concrets et facilement illustrables** — éviter les abstractions (longueur, neuf, etc.).
 
+### Ressemblance avec la célébrité (priorité)
+
+Le joueur doit pouvoir **reconnaître qui est évoqué** : visage et style au même niveau que la scène. **Détail canonique** : `docs/puzzle-generation-rules.md` (checklist, prompt type).
+
+En résumé : lister **au moins 4 traits** visuels publics avant le prompt ; **portrait ou buste** ; intégrer ces traits **nommément** dans le prompt ; illustration stylisée mais **forte charge de ressemblance** (pas une silhouette générique).
+
 ### Qualité visuelle
 
-Composition soignée, cadrage cinématographique, éclairage cohérent, style adapté au personnage. Éviter l’esthétique trop « IA ».
+Composition soignée, cadrage cinématographique, éclairage cohérent, style adapté au personnage. Éviter l’esthétique trop « IA » (visages interchangeables).
 
 ### Style visuel (à reproduire)
 
 **Semi-réaliste** : entre cartoon et photo-réalisme.
 
 - Éclairage réaliste, proportions naturelles, texture de peau
-- Traits **stylisés** (features assouplies, rendu peinture digitale), pas une photographie
+- Traits **stylisés** (peinture digitale), pas une photographie — **traits d’identité** cadrés pour **maximiser la reconnaissance**
 - Touches de peinture visibles, brushwork soigné
-- Le personnage conserve des **traits distinctifs** reconnaissables (accessoires, silhouette, expression) pour permettre la devinette, sans être une copie photo
+- **Non** : personnage anonyme sans détails visage correspondant au modèle public
 
 ### Prompt type
 
-```
-[Description de la célébrité avec traits distinctifs] [situation illustrant le nom modifié] [ambiance, éclairage]. Style semi-réaliste : peinture digitale, éclairage réaliste, traits stylisés et assouplis, pas de photographie.
-CRITIQUE : L'image ne doit contenir AUCUN texte - pas de mots, lettres, bulles, légendes, étiquettes lisibles. Visuel pur uniquement. Format 400x400.
-```
+Voir le bloc **Prompt type** dans `docs/puzzle-generation-rules.md` (version à jour avec **RESSEMBLANCE** et liste de traits).
 
 ## Fuseau horaire
 

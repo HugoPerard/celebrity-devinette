@@ -5,7 +5,7 @@
 ## Contenu
 
 - **Pas** de contenu haineux, diffamatoire (respecter le cadre légal / éthique du produit).
-- La devinette doit être un **jeu de mots** ou indice visuel **abstrait**.
+- La devinette repose sur un **jeu de mots** (nom modifié) et une **scène concrète** qui illustre ce sens ; la figure doit **évoquer clairement** la personnalité publique (voir **Ressemblance** ci-dessous), sans être une photo de presse.
 
 ## Fichiers à produire (par jour)
 
@@ -41,24 +41,34 @@ L'image ne doit **jamais** contenir de texte qui donne la réponse : pas de mots
 
 La scène illustre le **sens du nom modifié** (ex. : Michel Sardine → entouré de sardines, Dany Boue → personnage dans la boue, Vincent Dindon → entouré de dindons, Johnny Holiday → en vacances à la plage). Privilégier des concepts **concrets et facilement illustrables** — éviter les abstractions (longueur, neuf, etc.).
 
+### Ressemblance avec la célébrité (priorité)
+
+Le joueur doit pouvoir **reconnaître qui est évoqué** avant même de trouver le jeu de mots : le visage et le style comptent autant que la scène.
+
+1. **Recherche courte (obligatoire)** : avant d’écrire le prompt, lister **au moins 4 éléments** visuels publics et vérifiables (ex. : forme du visage, coupe / couleur de cheveux, barbe ou moustache, sourcils, rides ou fossettes marquantes, teint, silhouette, âge apparent, lunettes ou bijoux récurrents, tenue ou accessoire iconique).
+2. **Visage au centre** : cadrage **buste ou portrait** en priorité ; le personnage occupe une **part dominante du cadre** (éviter les tout-petits personnages perdus dans un décor).
+3. **Traits distinctifs explicites dans le prompt** : intégrer **nommément** plusieurs de ces éléments (pas seulement « acteur français » ou « femme élégante »).
+4. **Cohérence d’époque / look** : si la célébrité a un **look reconnaissable** (époque cinéma, coupe signature, barbe caractéristique), l’aligner pour renforcer la ressemblance.
+5. **Équilibre** : illustration **stylisée** (peinture digitale, pas une photo de presse ni un rendu « deepfake »), mais **charge de ressemblance élevée** — caricature expressive plutôt que figure générique.
+
 ### Qualité visuelle
 
-Composition soignée, cadrage cinématographique, éclairage cohérent, style adapté au personnage. Éviter l'esthétique trop « IA ».
+Composition soignée, cadrage cinématographique, éclairage cohérent, style adapté au personnage. Éviter l'esthétique trop « IA » (visages lisses interchangeables, mains bizarres).
 
 ### Style visuel (à reproduire)
 
 **Semi-réaliste** : entre cartoon et photo-réalisme.
 
 - Éclairage réaliste, proportions naturelles, texture de peau
-- Traits **stylisés** (features assouplies, rendu peinture digitale), pas une photographie
+- Traits **stylisés** (rendu peinture digitale), pas une photographie — mais **traits d’identité** exagérés ou cadrés pour **maximiser la reconnaissance** (comme une couverture magazine ou une affiche de film peinte)
 - Touches de peinture visibles, brushwork soigné
-- Le personnage conserve des **traits distinctifs** reconnaissables (accessoires, silhouette, expression) pour permettre la devinette, sans être une copie photo
+- **Non** : silhouette anonyme, « acteur lambda » sans détails biographiques visibles au visage
 
 ### Prompt type
 
 ```
-[Description de la célébrité avec traits distinctifs] [situation illustrant le nom modifié] [ambiance, éclairage]. Style semi-réaliste : peinture digitale, éclairage réaliste, traits stylisés et assouplis, pas de photographie.
-CRITIQUE : L'image ne doit contenir AUCUN texte - pas de mots, lettres, bulles, légendes, étiquettes lisibles. Visuel pur uniquement. Format 400x400.
+Portrait ou buste : [prénom utilisé pour le jeu de mots] — RESSEMBLANCE : [trait 1], [trait 2], [trait 3], [trait 4] (voir célébrité réelle). [Situation / accessoires illustrant le nom modifié]. [Ambiance, éclairage]. Style semi-réaliste : peinture digitale de portrait, éclairage réaliste, traits reconnaissables et intentionnellement proches du modèle public, pas une photographie ni un photoréalisme de studio.
+CRITIQUE : AUCUN texte — pas de mots, lettres, bulles, légendes, étiquettes lisibles. Visuel pur uniquement. Format 400x400.
 ```
 
 ## Fuseau horaire

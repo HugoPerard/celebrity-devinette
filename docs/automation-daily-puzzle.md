@@ -12,6 +12,7 @@ Ce dépôt est pensé pour une **PR quotidienne** (Cursor, script local, ou huma
 1. **Créer l’image**
    - Chemin : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (**pas de SVG**).
    - Taille raisonnable (éviter fichiers énormes dans Git).
+   - **Ressemblance** : suivre la section dédiée dans `docs/puzzle-generation-rules.md` (traits nommés, portrait/buste, prompt avec `RESSEMBLANCE`).
 
 2. **Créer le JSON**
    - Chemin : `content/puzzles/YYYY-MM-DD.json`.

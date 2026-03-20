@@ -14,10 +14,11 @@ Tu dois générer et intégrer la devinette du jour dans ce repo. Lis d'abord do
 
 2) GÉNÉRATION D'IMAGE
 - Choisis une célébrité française (prénom + nom) et un jeu de mots sur son nom de famille (homophone ou quasi-homophone avec un sens illustrable : ex. Michel Sardou → Michel Sardine).
-- Génère une image 400×400 pixels illustrant la scène du nom modifié.
+- Avant le prompt image : liste au moins 4 traits visuels publics de la célébrité (visage, cheveux, barbe, expression, accessoire iconique, etc.) ; portrait ou buste prioritaire ; intègre ces traits nommément dans le prompt (voir docs/puzzle-generation-rules.md section « Ressemblance »).
+- Génère une image 400×400 pixels illustrant la scène du nom modifié, avec forte ressemblance stylisée (peinture digitale, pas photo).
 - L'image NE DOIT contenir AUCUN texte (pas de mots, lettres, bulles, légendes).
 - Sauvegarde l'image dans public/puzzles/YYYY-MM-DD.png (ou .webp / .jpg).
-- Prompt type pour la génération : [description célébrité] [scène illustrant le nom modifié] [ambiance]. CRITIQUE : aucune écriture visible. Format 400x400.
+- Prompt type : suivre le bloc dans docs/puzzle-generation-rules.md (RESSEMBLANCE + situation + CRITIQUE aucun texte). Format 400x400.
 
 3) FICHIER JSON
 - Crée content/puzzles/YYYY-MM-DD.json avec :
