@@ -19,3 +19,19 @@
 
 - [ ] GitHub Action cron + API image (hors MVP)
 - [ ] Hébergement (Vercel / Cloudflare)
+
+## Devinette du jour — 2026-03-20
+
+- [x] Confirmer la date du jour au fuseau Europe/Paris
+- [x] Choisir une célébrité française avec un jeu de mots de patronyme illustrable
+- [x] Générer une image raster 400x400 sans texte dans `public/puzzles/2026-03-20.png`
+- [x] Créer `content/puzzles/2026-03-20.json` avec les champs conformes
+- [ ] Vérifier localement avec `pnpm build`
+- [ ] Committer, pousser la branche de travail et ouvrir une PR si nécessaire
+
+## Review — 2026-03-20
+
+- [ ] Image conforme aux règles (400x400, raster, aucun texte)
+- [ ] JSON conforme (`date`, `imagePath`, `answerNormalized`, `celebrityPublicName`)
+- [ ] Build validé
+- [ ] Git synchronisé
