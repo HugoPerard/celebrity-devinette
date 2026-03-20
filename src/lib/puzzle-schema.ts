@@ -13,7 +13,7 @@ export const puzzleFileSchema = z.object({
       message: 'imagePath must be a raster image (.png, .webp, .jpg, …), not .svg',
     }),
   /** Lowercase, no accents, single spaces between tokens (see normalizeGuess). */
-  answerNormalized: z.string().min(1),
+  answersNormalized: z.array(z.string().min(1)).min(1),
   celebrityPublicName: z.string().optional(),
 })
 

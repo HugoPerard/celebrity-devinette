@@ -45,7 +45,7 @@ Vérifier mentalement : *« Je reconnais la figure ; le nom modifié sonne comme
 1. **JSON** : `content/puzzles/YYYY-MM-DD.json` avec les champs :
    - `date` : même chaîne que le nom de fichier.
    - `imagePath` : URL statique commençant par `/puzzles/` (fichier sous `public/puzzles/`).
-   - `answerNormalized` : version **avec le jeu de mot** (prénom + nom modifié), normalisée comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `edouard bear` pour Édouard Baer, `pierre riche` pour Pierre Richard, `dany boue` pour Dany Boon, `vincent dindon` pour Vincent Lindon, `johnny holiday` pour Johnny Hallyday, `lionel messy` pour Lionel Messi → Lionel Messy).
+   - `answersNormalized` : tableau des versions **avec le jeu de mot** (prénom + nom modifié), normalisées comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `["edouard bear"]` pour Édouard Baer, `["pierre riche"]` pour Pierre Richard, `["dany boue"]` pour Dany Boon, `["vincent dindon"]` pour Vincent Lindon, `["johnny holiday"]` pour Johnny Hallyday, `["lionel messy"]` pour Lionel Messi → Lionel Messy). Permet d'inclure plusieurs variantes acceptées (ex. avec ou sans tiret, etc.).
    - `celebrityPublicName` (optionnel) : nom usuel de la personnalité publique (notes internes / PR, pas affiché par l’app — le nom du champ reste technique).
 
 2. **Image** : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (raster uniquement — **pas de SVG**), **400×400 pixels**, **contenu en plein cadre** (l’illustration remplit tout le carré, **sans bordure**, sans marge décorative, sans bandes letterbox/pillarbox) — référencée par `imagePath`.
@@ -132,4 +132,4 @@ CRITIQUE : AUCUN texte — pas de mots, lettres, bulles, légendes, étiquettes 
 ## Qualité
 
 - Vérifier que `pnpm build` passe après ajout des fichiers.
-- Ne **jamais** ajouter `answerNormalized` dans un fichier « public » séparé : il reste dans le JSON côté repo ; l'app ne l'envoie pas au client via le loader (validation via `submitGuess` uniquement).
+- Ne **jamais** ajouter `answersNormalized` dans un fichier « public » séparé : il reste dans le JSON côté repo ; l'app ne l'envoie pas au client via le loader (validation via `submitGuess` uniquement).

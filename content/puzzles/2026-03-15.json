@@ -1,6 +1,8 @@
 {
   "date": "2026-03-15",
   "imagePath": "/puzzles/2026-03-15.png",
-  "answerNormalized": "marion cotillon",
-  "celebrityPublicName": "Marion Cotillard"
+  "celebrityPublicName": "Marion Cotillard",
+  "answersNormalized": [
+    "marion cotillon"
+  ]
 }

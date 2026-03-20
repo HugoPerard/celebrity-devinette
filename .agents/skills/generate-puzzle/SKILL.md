@@ -29,7 +29,7 @@ Utilise ce skill quand l'utilisateur demande de "générer une devinette", "cré
 - Crée le fichier `content/puzzles/YYYY-MM-DD.json` avec :
   - `date`: "YYYY-MM-DD"
   - `imagePath`: "/puzzles/YYYY-MM-DD.png"
-  - `answerNormalized`: Le jeu de mots normalisé (minuscules, sans accents, espaces simples).
+  - `answersNormalized`: Tableau des jeux de mots normalisés (minuscules, sans accents, espaces simples). Permet d'inclure plusieurs variantes.
   - `celebrityPublicName`: Le vrai nom de la personnalité.
 
 ### 5. Vérification

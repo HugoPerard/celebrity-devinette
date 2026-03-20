@@ -1,6 +1,8 @@
 {
   "date": "2026-03-06",
   "imagePath": "/puzzles/2026-03-06.png",
-  "answerNormalized": "dany boue",
-  "celebrityPublicName": "Dany Boon"
+  "celebrityPublicName": "Dany Boon",
+  "answersNormalized": [
+    "dany boue"
+  ]
 }

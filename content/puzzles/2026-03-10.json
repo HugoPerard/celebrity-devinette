@@ -1,6 +1,8 @@
 {
   "date": "2026-03-10",
   "imagePath": "/puzzles/2026-03-10.png",
-  "answerNormalized": "celine d'ion",
-  "celebrityPublicName": "Céline Dion"
+  "celebrityPublicName": "Céline Dion",
+  "answersNormalized": [
+    "celine d'ion", "celine d ion"
+  ]
 }

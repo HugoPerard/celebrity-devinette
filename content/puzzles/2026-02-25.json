@@ -1,6 +1,8 @@
 {
   "date": "2026-02-25",
   "imagePath": "/puzzles/2026-02-25.png",
-  "answerNormalized": "stro mage",
-  "celebrityPublicName": "Stromae"
+  "celebrityPublicName": "Stromae",
+  "answersNormalized": [
+    "stro mage"
+  ]
 }

@@ -1,6 +1,8 @@
 {
   "date": "2026-03-26",
   "imagePath": "/puzzles/2026-03-26.png",
-  "answerNormalized": "nikos alligator",
-  "celebrityPublicName": "Nikos Aliagas"
+  "celebrityPublicName": "Nikos Aliagas",
+  "answersNormalized": [
+    "nikos alligator"
+  ]
 }

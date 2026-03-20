@@ -1,6 +1,8 @@
 {
   "date": "2026-03-02",
   "imagePath": "/puzzles/2026-03-02.png",
-  "answerNormalized": "omar si",
-  "celebrityPublicName": "Omar Sy"
+  "celebrityPublicName": "Omar Sy",
+  "answersNormalized": [
+    "omar si"
+  ]
 }

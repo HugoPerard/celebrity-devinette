@@ -1,6 +1,8 @@
 {
   "date": "2026-03-09",
   "imagePath": "/puzzles/2026-03-09.png",
-  "answerNormalized": "natalie portmanteau",
-  "celebrityPublicName": "Natalie Portman"
+  "celebrityPublicName": "Natalie Portman",
+  "answersNormalized": [
+    "natalie portmanteau"
+  ]
 }

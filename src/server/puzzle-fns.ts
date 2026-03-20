@@ -49,6 +49,6 @@ export const submitGuess = createServerFn({ method: 'POST' })
     if (!isPuzzleDateReleased(data.date)) return { ok: false } as const
     const puzzle = await loadPuzzleFile(data.date)
     const g = normalizeGuess(data.guess)
-    const ok = g.length > 0 && g === puzzle.answerNormalized
+    const ok = g.length > 0 && puzzle.answersNormalized.includes(g)
     return { ok } as const
   })

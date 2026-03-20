@@ -26,7 +26,7 @@ pnpm preview
 
 | Chemin                            | Rôle                                                                     |
 | --------------------------------- | ------------------------------------------------------------------------ |
-| `content/puzzles/YYYY-MM-DD.json` | Métadonnées + `answerNormalized` (validation serveur)                    |
+| `content/puzzles/YYYY-MM-DD.json` | Métadonnées + `answersNormalized` (validation serveur)                    |
 | `public/puzzles/`                 | Images raster servies en statique (`.png`, `.webp`, `.jpg` — pas de SVG) |
 | `src/server/puzzle-fns.ts`        | `getTodayPuzzlePublic`, `submitGuess`                                    |
 | `docs/automation-daily-puzzle.md` | Checklist publication quotidienne                                        |

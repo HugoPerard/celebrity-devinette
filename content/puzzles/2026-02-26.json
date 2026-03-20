@@ -1,6 +1,8 @@
 {
   "date": "2026-02-26",
   "imagePath": "/puzzles/2026-02-26.png",
-  "answerNormalized": "emmanuel macaron",
-  "celebrityPublicName": "Emmanuel Macron"
+  "celebrityPublicName": "Emmanuel Macron",
+  "answersNormalized": [
+    "emmanuel macaron"
+  ]
 }
