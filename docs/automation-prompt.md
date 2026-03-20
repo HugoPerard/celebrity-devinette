@@ -23,7 +23,7 @@ Tu dois générer et intégrer la devinette du jour dans ce repo. Lis d'abord do
 - Crée content/puzzles/YYYY-MM-DD.json avec :
   - date : "YYYY-MM-DD"
   - imagePath : "/puzzles/YYYY-MM-DD.png" (ou .webp/.jpg selon le fichier)
-  - answerNormalized : prénom + nom en minuscules, sans accents, espaces simples (ex. "jean dujardin"). Utilise la même logique que src/lib/normalize-guess.ts.
+  - answerNormalized : version avec le jeu de mot (prénom + nom modifié), normalisée en minuscules sans accents (ex. "edouard bear" pour Édouard Baer, "pierre riche" pour Pierre Richard). Même logique que src/lib/normalize-guess.ts.
   - celebrityPublicName (optionnel) : nom affiché pour la PR
 
 4) VÉRIFICATION
@@ -52,5 +52,5 @@ Si tu n'as pas les droits de push direct sur main, ouvre une PR à la place (bra
 ## Rappels depuis les règles
 
 - **Pas de SVG** — raster uniquement (.png, .webp, .jpg).
-- **answerNormalized** : minuscules, NFD + strip accents, espaces simples. Ex. `"Patrick Bruel"` → `"patrick bruel"`.
+- **answerNormalized** : version avec le jeu de mot (nom modifié). Ex. `"Édouard Bear"` (pour Baer) → `"edouard bear"`.
 - **Pas de texte dans l’image** — le jeu repose uniquement sur le visuel.
