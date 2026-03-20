@@ -14,7 +14,7 @@ Tu dois générer et intégrer la devinette du jour dans ce repo. Lis d'abord do
 
 2) GÉNÉRATION D'IMAGE
 - Choisis une personnalité publique (prénom + nom) avec un jeu de mots sur le nom de famille (homophone ou quasi-homophone avec un sens illustrable : ex. Michel Sardou → Michel Sardine, Lionel Messi → Lionel Messy). **Varie les « sources »** par rapport aux derniers fichiers dans content/puzzles/ : ne pas enchaîner le même type (ex. uniquement des acteurs français) ; alterner domaines (cinéma, musique, politique en jeu léger, sport, pop culture, etc.), époques et nationalités lorsque le jeu reste soluble pour un public francophone — voir docs/puzzle-generation-rules.md § « Diversité des figures ».
-- Avant le prompt image : liste au moins 4 traits visuels publics de la célébrité (visage, cheveux, barbe, expression, accessoire iconique, etc.) ; portrait ou buste prioritaire ; intègre ces traits nommément dans le prompt (voir docs/puzzle-generation-rules.md section « Ressemblance »).
+- Avant le prompt image : liste au moins 4 traits visuels publics de la **personnalité publique connue** (visage, cheveux, barbe, expression, accessoire iconique, tenue de plateau, équipement sportif, etc.) ; portrait ou buste prioritaire ; intègre ces traits nommément dans le prompt (voir docs/puzzle-generation-rules.md section « Ressemblance »).
 - Génère une image illustrant la scène du nom modifié, avec forte ressemblance stylisée (peinture digitale, pas photo). Le ratio importe peu en sortie brute.
 - L'image NE DOIT contenir AUCUN texte (pas de mots, lettres, bulles, légendes).
 - **Export obligatoire** : produire le fichier livré avec `pnpm puzzle:export -- <fichier_source_temporaire> public/puzzles/YYYY-MM-DD.png` (ImageMagick requis — voir docs/puzzle-generation-rules.md § Export final). Ne jamais utiliser `sips -z 400 400` sur une image non carrée (déforme). Le résultat doit être **400×400**, plein cadre, sans étirement.
@@ -53,7 +53,7 @@ Si tu n'as pas les droits de push direct sur main, ouvre une PR à la place (bra
 
 ## Rappels depuis les règles
 
-- **Diversité** — alterner types de célébrités et horizons sur la série de puzzles (voir § *Diversité des figures* dans `docs/puzzle-generation-rules.md`).
+- **Diversité** — alterner types de **personnalités publiques connues** et horizons sur la série de puzzles (voir § *Diversité des figures* dans `docs/puzzle-generation-rules.md`).
 - **Pas de SVG** — raster uniquement (.png, .webp, .jpg).
 - **answerNormalized** : version avec le jeu de mot (nom modifié). Ex. `"Édouard Bear"` (pour Baer) → `"edouard bear"`.
 - **Pas de texte dans l’image** — le jeu repose uniquement sur le visuel.

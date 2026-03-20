@@ -1,4 +1,4 @@
-# Devinette célébrités — suivi
+# Devinette personnalités publiques — suivi
 
 ## Implémentation initiale
 

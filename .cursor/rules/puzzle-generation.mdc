@@ -4,7 +4,7 @@ globs: content/puzzles/**,public/puzzles/**,docs/automation-daily-puzzle.md,docs
 alwaysApply: false
 ---
 
-# Génération devinette « célébrité / jeu de mots »
+# Génération devinette « personnalité publique connue / jeu de mots »
 
 > Canonique : `docs/puzzle-generation-rules.md` (utilisé par les automations Cursor).
 
@@ -16,14 +16,14 @@ alwaysApply: false
 
 ## Diversité des figures
 
-Sur une **série de devinettes** (semaine, mois), **varier les « sources »** de célébrités pour éviter l’uniformité :
+Sur une **série de devinettes** (semaine, mois), **varier les « sources »** de **personnalités publiques connues** pour éviter l’uniformité — pas seulement des « stars » au sens étroit.
 
-- **Domaines** : alterner **acteurs et actrices**, **chanteuses et chanteurs**, **personnalités politiques** (jeu léger, non diffamatoire, même cadre légal qu’ailleurs), **sportifs**, **figures de la pop culture** (télé, réseaux, jeux vidéo, mèmes durables), **auteurs / intellectuels** connus du grand public, etc.
+- **Domaines** : alterner **acteurs et actrices**, **chanteuses et chanteurs**, **journalistes** et **présentateurs / présentatrices** (télé, radio, presse), **sportives et sportifs**, **personnalités politiques** (jeu léger, non diffamatoire, même cadre légal qu’ailleurs), **figures de la pop culture** (télé, réseaux, jeux vidéo, mèmes durables), **auteurs / intellectuels** connus du grand public, etc.
 - **Époques** : mélanger **générations** — figures **classiques** ou associées à une époque passée, et figures **très actuelles**.
 - **Nationalités et horizons** : ne pas tout centrer sur une seule scène nationale ; inclure des personnalités **internationales** lorsque le public francophone peut raisonnablement **reconnaître** la figure ou résoudre le jeu de mots.
 - **Suivi** : avant de figer une idée, **parcourir les puzzles récents** dans `content/puzzles/` pour limiter les **répétitions** du même type (ex. trois acteurs français d’affilée) ou du même registre.
 
-**Créativité (célébrités + jeux de mots)** : élargir volontairement les registres et les angles **dans le cadre** du produit — personnalités publiques identifiables, homophones / quasi-homophones sur le **son** du nom, scène et ressemblance cohérentes. Pas de traduction de sens du patronyme ; pas d’idée opaque pour la « blague ». Détail : section **Créativité : élargir les possibilités** dans `docs/puzzle-generation-rules.md`.
+**Créativité (personnalités + jeux de mots)** : élargir volontairement les registres et les angles **dans le cadre** du produit — **personnalités publiques connues** (y compris sport, journalisme, animation…), homophones / quasi-homophones sur le **son** du nom, scène et ressemblance cohérentes. Pas de traduction de sens du patronyme ; pas d’idée opaque pour la « blague ». Détail : section **Créativité : élargir les possibilités** dans `docs/puzzle-generation-rules.md`.
 
 ## Fichiers à produire (par jour)
 
@@ -31,7 +31,7 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
    - `date` : même chaîne que le nom de fichier.
    - `imagePath` : URL statique commençant par `/puzzles/` (fichier sous `public/puzzles/`).
    - `answerNormalized` : version **avec le jeu de mot** (prénom + nom modifié), normalisée comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `edouard bear` pour Édouard Baer, `pierre riche` pour Pierre Richard, `dany boue` pour Dany Boon, `vincent dindon` pour Vincent Lindon, `johnny holiday` pour Johnny Hallyday, `lionel messy` pour Lionel Messi → Lionel Messy).
-   - `celebrityPublicName` (optionnel) : pour notes internes / PR, pas affiché par l’app.
+   - `celebrityPublicName` (optionnel) : nom usuel de la personnalité publique (notes internes / PR, pas affiché par l’app — le nom du champ reste technique).
 
 2. **Image** : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (raster uniquement — **pas de SVG**), **400×400 pixels**, **contenu en plein cadre** (l’illustration remplit tout le carré, **sans bordure**, sans marge décorative, sans bandes letterbox/pillarbox) — référencée par `imagePath`.
 
@@ -45,7 +45,7 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
 
 ### Principe du jeu de mot
 
-Le jeu de mot repose sur une **modification du nom de famille** de la célébrité pour produire un homophone ou quasi-homophone avec un sens différent (ex. : Michel Sardou → Michel Sardine, Pierre Richard → Pierre Riche, Dany Boon → Dany Boue, Vincent Lindon → Vincent Dindon, Johnny Hallyday → Johnny Holiday, Lionel Messi → Lionel Messy).
+Le jeu de mot repose sur une **modification du nom de famille** de la **personnalité publique** pour produire un homophone ou quasi-homophone avec un sens différent (ex. : Michel Sardou → Michel Sardine, Pierre Richard → Pierre Riche, Dany Boon → Dany Boue, Vincent Lindon → Vincent Dindon, Johnny Hallyday → Johnny Holiday, Lionel Messi → Lionel Messy).
 
 **Traductions du patronyme (à éviter)** : ne pas remplacer le patronyme par la **traduction française du sens** (souvent depuis l’anglais) — ce n’est pas un homophone sur la **prononciation**. Voir **bons / mauvais exemples** dans `docs/puzzle-generation-rules.md` (ex. bon : **Céline Dion → Céline d’ion** ; à éviter : **Brad Fosse**, **Emma Pierres**, **Will Forgeron**).
 
@@ -66,7 +66,7 @@ L’image ne doit **jamais** contenir de texte qui donne la réponse : pas de mo
 
 La scène illustre le **sens du nom modifié** (ex. : Michel Sardine → entouré de sardines, Dany Boue → personnage dans la boue, Vincent Dindon → entouré de dindons, Johnny Holiday → en vacances à la plage, Lionel Messy → scène de désordre / bazar). Privilégier des concepts **concrets et facilement illustrables** — éviter les abstractions (longueur, neuf, etc.).
 
-### Ressemblance avec la célébrité (priorité)
+### Ressemblance avec la personnalité publique (priorité)
 
 Le joueur doit pouvoir **reconnaître qui est évoqué** : visage et style au même niveau que la scène. **Détail canonique** : `docs/puzzle-generation-rules.md` (checklist, prompt type).
 

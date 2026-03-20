@@ -1,4 +1,4 @@
-# Génération devinette « célébrité / jeu de mots »
+# Génération devinette « personnalité publique connue / jeu de mots »
 
 > Source pour les automations Cursor et `.cursor/rules/puzzle-generation.mdc`. Consulter ce fichier pour toutes les contraintes de génération.
 
@@ -9,23 +9,23 @@
 
 ## Diversité des figures
 
-Sur une **série de devinettes** (semaine, mois), **varier les « sources »** de célébrités pour éviter l’uniformité :
+Sur une **série de devinettes** (semaine, mois), **varier les « sources »** de **personnalités publiques connues** pour éviter l’uniformité — pas seulement des « stars » au sens étroit du terme.
 
-- **Domaines** : alterner **acteurs et actrices**, **chanteuses et chanteurs**, **personnalités politiques** (jeu léger, non diffamatoire, même cadre légal qu’ailleurs), **sportifs**, **figures de la pop culture** (télé, réseaux, jeux vidéo, mèmes durables), **auteurs / intellectuels** connus du grand public, etc.
+- **Domaines** : alterner **acteurs et actrices**, **chanteuses et chanteurs**, **journalistes** et **présentateurs / présentatrices** (télé, radio, presse), **sportives et sportifs**, **personnalités politiques** (jeu léger, non diffamatoire, même cadre légal qu’ailleurs), **figures de la pop culture** (télé, réseaux, jeux vidéo, mèmes durables), **auteurs / intellectuels** connus du grand public, etc.
 - **Époques** : mélanger **générations** — figures **classiques** ou associées à une époque passée, et figures **très actuelles**.
 - **Nationalités et horizons** : ne pas tout centrer sur une seule scène nationale ; inclure des personnalités **internationales** lorsque le public francophone peut raisonnablement **reconnaître** la figure ou résoudre le jeu de mots.
 - **Suivi** : avant de figer une idée, **parcourir les puzzles récents** dans `content/puzzles/` pour limiter les **répétitions** du même type (ex. trois acteurs français d’affilée) ou du même registre.
 
 ## Créativité : élargir les possibilités (sans perdre la cohérence)
 
-Le format reste **célébrité publique + jeu de mots sur le patronyme + scène illustrée + forte ressemblance**. Dans ce cadre, **être imaginatif** : varier les angles pour éviter la routine, tout en gardant une **chaîne lisible** pour le joueur.
+Le format reste **personnalité publique connue + jeu de mots sur le patronyme + scène illustrée + forte ressemblance**. Dans ce cadre, **être imaginatif** : varier les angles pour éviter la routine, tout en gardant une **chaîne lisible** pour le joueur.
 
-### Célébrités
+### Personnalités publiques connues
 
-- Rester sur des **personnalités publiques réelles**, identifiables par le public cible (voir **Ressemblance**).
-- **Élargir volontairement** les registres au fil des semaines : cinéma, séries, musique (FR / international quand le nom traverse les frontières), sport, télé, humour, réseaux, auteurs ou intellectuels « grand public », etc.
-- Une figure peut être **peu photographiée** si son **nom** et un **trait visuel** (costume, silhouette, accessoire iconique) suffisent à l’identification — mais éviter les noms **trop obscurs** ou les niches sans ancrage culturel partagé.
-- **Cohérence** : la célébrité choisie doit **porter** le jeu de mots (le patronyme offre une prise phonétique ou une déformation crédible, pas un collage forcé).
+- Viser des **personnalités publiques connues** au sens large : **reconnues par le grand public** (médias, sport, culture, politique, etc.), pas seulement le cinéma ou la musique.
+- **Élargir volontairement** les registres au fil des semaines : cinéma, séries, musique (FR / international quand le nom traverse les frontières), **journalisme**, **animation** (télé, radio), **sport**, télé, humour, réseaux, auteurs ou intellectuels « grand public », etc.
+- Une figure peut être **peu photographiée** si son **nom** et un **trait visuel** (costume, silhouette, accessoire iconique, tenue de sport, plateau TV…) suffisent à l’identification — mais éviter les noms **trop obscurs** ou les niches sans ancrage culturel partagé.
+- **Cohérence** : la personnalité choisie doit **porter** le jeu de mots (le patronyme offre une prise phonétique ou une déformation crédible, pas un collage forcé).
 
 ### Jeux de mots
 
@@ -46,7 +46,7 @@ Vérifier mentalement : *« Je reconnais la figure ; le nom modifié sonne comme
    - `date` : même chaîne que le nom de fichier.
    - `imagePath` : URL statique commençant par `/puzzles/` (fichier sous `public/puzzles/`).
    - `answerNormalized` : version **avec le jeu de mot** (prénom + nom modifié), normalisée comme `normalizeGuess` dans `src/lib/normalize-guess.ts` (minuscules, sans accents, espaces simples ; ex. `edouard bear` pour Édouard Baer, `pierre riche` pour Pierre Richard, `dany boue` pour Dany Boon, `vincent dindon` pour Vincent Lindon, `johnny holiday` pour Johnny Hallyday, `lionel messy` pour Lionel Messi → Lionel Messy).
-   - `celebrityPublicName` (optionnel) : pour notes internes / PR, pas affiché par l'app.
+   - `celebrityPublicName` (optionnel) : nom usuel de la personnalité publique (notes internes / PR, pas affiché par l’app — le nom du champ reste technique).
 
 2. **Image** : `public/puzzles/YYYY-MM-DD.png` ou `.webp` / `.jpg` (raster uniquement — **pas de SVG**), **400×400 pixels**, **contenu en plein cadre** (l’illustration remplit tout le carré, **sans bordure**, sans marge décorative, sans bandes letterbox/pillarbox) — référencée par `imagePath`.
 
@@ -72,7 +72,7 @@ Le prompt peut demander un visuel large ou carré ; **l’étape d’export** es
 
 ### Principe du jeu de mot
 
-Le jeu de mot repose sur une **modification du nom de famille** de la célébrité pour produire un homophone ou quasi-homophone avec un sens différent (ex. : Michel Sardou → Michel Sardine, Pierre Richard → Pierre Riche, Dany Boon → Dany Boue, Vincent Lindon → Vincent Dindon, Johnny Hallyday → Johnny Holiday, Lionel Messi → Lionel Messy).
+Le jeu de mot repose sur une **modification du nom de famille** de la **personnalité publique** pour produire un homophone ou quasi-homophone avec un sens différent (ex. : Michel Sardou → Michel Sardine, Pierre Richard → Pierre Riche, Dany Boon → Dany Boue, Vincent Lindon → Vincent Dindon, Johnny Hallyday → Johnny Holiday, Lionel Messi → Lionel Messy).
 
 **Traductions du patronyme (à éviter)** : ne pas se contenter de **traduire le sens** du nom (souvent anglais) vers un **mot français** — ce n’est pas le même mécanisme qu’un **homophone / quasi-homophone** sur la **prononciation** du nom tel qu’on l’entend. Le joueur francophone doit pouvoir partir du **son** du patronyme, pas d’une équivalence lexicale *pit* → *fosse*, *stone* → *pierres*.
 
@@ -95,14 +95,14 @@ L'image ne doit **jamais** contenir de texte qui donne la réponse : pas de mots
 
 La scène illustre le **sens du nom modifié** (ex. : Michel Sardine → entouré de sardines, Dany Boue → personnage dans la boue, Vincent Dindon → entouré de dindons, Johnny Holiday → en vacances à la plage, Lionel Messy → scène de désordre / bazar). Privilégier des concepts **concrets et facilement illustrables** — éviter les abstractions (longueur, neuf, etc.).
 
-### Ressemblance avec la célébrité (priorité)
+### Ressemblance avec la personnalité publique (priorité)
 
 Le joueur doit pouvoir **reconnaître qui est évoqué** avant même de trouver le jeu de mots : le visage et le style comptent autant que la scène.
 
 1. **Recherche courte (obligatoire)** : avant d’écrire le prompt, lister **au moins 4 éléments** visuels publics et vérifiables (ex. : forme du visage, coupe / couleur de cheveux, barbe ou moustache, sourcils, rides ou fossettes marquantes, teint, silhouette, âge apparent, lunettes ou bijoux récurrents, tenue ou accessoire iconique).
 2. **Visage au centre** : cadrage **buste ou portrait** en priorité ; le personnage occupe une **part dominante du cadre** (éviter les tout-petits personnages perdus dans un décor).
 3. **Traits distinctifs explicites dans le prompt** : intégrer **nommément** plusieurs de ces éléments (pas seulement « acteur français » ou « femme élégante »).
-4. **Cohérence d’époque / look** : si la célébrité a un **look reconnaissable** (époque cinéma, coupe signature, barbe caractéristique), l’aligner pour renforcer la ressemblance.
+4. **Cohérence d’époque / look** : si la personnalité a un **look reconnaissable** (époque cinéma, coupe signature, barbe caractéristique, tenue de plateau, maillot ou équipement sportif iconique…), l’aligner pour renforcer la ressemblance.
 5. **Équilibre** : illustration **stylisée** (peinture digitale, pas une photo de presse ni un rendu « deepfake »), mais **charge de ressemblance élevée** — caricature expressive plutôt que figure générique.
 
 ### Qualité visuelle
@@ -116,12 +116,12 @@ Composition soignée, cadrage cinématographique, éclairage cohérent, style ad
 - Éclairage réaliste, proportions naturelles, texture de peau
 - Traits **stylisés** (rendu peinture digitale), pas une photographie — mais **traits d’identité** exagérés ou cadrés pour **maximiser la reconnaissance** (comme une couverture magazine ou une affiche de film peinte)
 - Touches de peinture visibles, brushwork soigné
-- **Non** : silhouette anonyme, « acteur lambda » sans détails biographiques visibles au visage
+- **Non** : silhouette anonyme, « personnalité lambda » sans détails visibles au visage ou au corps
 
 ### Prompt type
 
 ```
-Portrait ou buste : [prénom utilisé pour le jeu de mots] — RESSEMBLANCE : [trait 1], [trait 2], [trait 3], [trait 4] (voir célébrité réelle). [Situation / accessoires illustrant le nom modifié]. [Ambiance, éclairage]. Style semi-réaliste : peinture digitale de portrait, éclairage réaliste, traits reconnaissables et intentionnellement proches du modèle public, pas une photographie ni un photoréalisme de studio.
+Portrait ou buste : [prénom utilisé pour le jeu de mots] — RESSEMBLANCE : [trait 1], [trait 2], [trait 3], [trait 4] (voir personnalité réelle). [Situation / accessoires illustrant le nom modifié]. [Ambiance, éclairage]. Style semi-réaliste : peinture digitale de portrait, éclairage réaliste, traits reconnaissables et intentionnellement proches du modèle public, pas une photographie ni un photoréalisme de studio.
 CRITIQUE : AUCUN texte — pas de mots, lettres, bulles, légendes, étiquettes lisibles. Visuel pur uniquement. Composition lisible en cadrage serré ; le livrable final passera par l’export 400×400 « cover » (voir § Export final) — pas besoin que le fichier brut soit déjà carré.
 ```
 

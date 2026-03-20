@@ -1,6 +1,6 @@
 # Kasistar
 
-Application [TanStack Start](https://tanstack.com/start) : chaque jour, une **image-indice** (jeu de mots / célébrité) à deviner. Les énigmes sont des fichiers dans le dépôt (`content/puzzles/` + `public/puzzles/`). Les automations Cursor peuvent ouvrir une PR quotidienne en suivant `docs/automation-daily-puzzle.md` et `docs/puzzle-generation-rules.md`.
+Application [TanStack Start](https://tanstack.com/start) : chaque jour, une **image-indice** (jeu de mots sur une **personnalité publique connue**) à deviner. Les énigmes sont des fichiers dans le dépôt (`content/puzzles/` + `public/puzzles/`). Les automations Cursor peuvent ouvrir une PR quotidienne en suivant `docs/automation-daily-puzzle.md` et `docs/puzzle-generation-rules.md`.
 
 ## Fuseau horaire
 
