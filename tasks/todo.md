@@ -49,3 +49,18 @@
 ### Review
 
 - `pnpm exec tsc --noEmit`, `pnpm build`, `pnpm test` OK.
+
+## Devinette du jour 2026-03-23
+
+- [x] Confirmer la date du jour au fuseau Europe/Paris (`2026-03-23`)
+- [x] Auditer l'existant pour le slot du jour (`content/puzzles/2026-03-23.json` présent, image manquante)
+- [x] Générer une image source illustrant `Léa Salamé` -> `Léa Salami` sans texte visible
+- [x] Exporter le livrable en `public/puzzles/2026-03-23.png` au format exact 400x400
+- [x] Vérifier/mettre à jour `content/puzzles/2026-03-23.json`
+- [ ] Exécuter `pnpm build`
+- [ ] Committer et pousser les changements sur la branche de travail
+
+### Review
+
+- [x] Vérification visuelle du PNG généré (pas de texte, cadrage plein cadre)
+- [ ] Build local OK
