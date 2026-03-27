@@ -49,18 +49,3 @@
 ### Review
 
 - `pnpm exec tsc --noEmit`, `pnpm build`, `pnpm test` OK.
-
-## Devinette du jour 2026-03-27
-
-- [x] Calculer la date du jour en fuseau Europe/Paris
-- [x] Auditer les puzzles récents et éviter répétitions / doublons
-- [x] Remplacer l'entrée 2026-03-27 incomplète par une vraie devinette française cohérente
-- [x] Générer une image source raster sans texte puis l'exporter en 400x400 sous `public/puzzles/2026-03-27.png`
-- [x] Mettre à jour `content/puzzles/2026-03-27.json` avec les métadonnées finales
-- [x] Vérifier avec `pnpm build`
-- [ ] Commit, push de la branche de travail, puis ouvrir une PR si le push direct vers la cible n'est pas possible
-
-### Review
-
-- [x] Date Paris confirmée : `2026-03-27`
-- [x] Build validé après ajout de l'image et du JSON du jour
