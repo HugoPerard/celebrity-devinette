@@ -49,3 +49,22 @@
 ### Review
 
 - `pnpm exec tsc --noEmit`, `pnpm build`, `pnpm test` OK.
+
+## Devinette du jour (2026-03-28)
+
+- [x] Vérifier la date Paris et la diversité des puzzles récents
+- [x] Choisir une célébrité française + un jeu de mots phonétique valide
+- [x] Générer / exporter l'image 400×400 dans `public/puzzles/2026-03-28.png`
+- [x] Créer `content/puzzles/2026-03-28.json`
+- [x] Valider avec `pnpm build`
+- [ ] Committer et pousser les fichiers du jour
+
+### Review
+
+- [x] Date Paris confirmée : `2026-03-28`.
+- [x] Puzzle retenu : `Jacques Dutronc` -> `jacques du tronc`.
+- [x] Image raster 400×400 sans texte créée dans `public/puzzles/2026-03-28.png`.
+- [x] JSON créé dans `content/puzzles/2026-03-28.json`.
+- [x] `pnpm build` OK.
+- [x] `pnpm test` OK (avec message Vitest de fermeture tardive, sans échec).
+- [ ] Git vérifié (commit/push à faire).
