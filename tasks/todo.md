@@ -66,3 +66,20 @@
 - [x] Vérifier le format image (400x400, sans texte visible)
 - [x] Vérifier la cohérence du JSON (`date`, `imagePath`, `answersNormalized`)
 - [ ] Vérifier que `pnpm build` passe
+
+## Devinette du jour (2026-03-31)
+
+- [x] Lire les règles de génération et l'automation du puzzle quotidien
+- [x] Calculer la date du jour au fuseau Europe/Paris
+- [x] Parcourir les puzzles récents pour éviter une répétition de registre
+- [x] Choisir une célébrité française et formaliser un jeu de mots sonore conforme
+- [x] Générer l'image source puis exporter le livrable 400x400 dans `public/puzzles/`
+- [x] Créer `content/puzzles/2026-03-31.json`
+- [x] Exécuter `pnpm build`
+- [x] Committer et pousser les fichiers du puzzle du jour
+
+### Review
+
+- [x] Vérifier le format image (400x400, sans texte visible)
+- [x] Vérifier la cohérence du JSON (`date`, `imagePath`, `answersNormalized`)
+- [x] Vérifier que `pnpm build` passe
