@@ -9,7 +9,8 @@ Utilise ce skill quand l'utilisateur demande de "générer une devinette", "cré
 
 ### 1. Analyse du contexte
 - Lis TOUJOURS le fichier `docs/puzzle-generation-rules.md` pour te rafraîchir la mémoire sur les règles exactes.
-- Liste les fichiers dans `content/puzzles/` et lis quelques JSON récents pour savoir quelles personnalités ont déjà été utilisées et quelles dates sont disponibles.
+- Lis **obligatoirement** `docs/devinettes-deja-publiees.md` : ne **pas** reproposer une combinaison déjà listée (même personnalité + même jeu de mots / mêmes `answersNormalized`). En cas de doute, recoupe avec les JSON dans `content/puzzles/`.
+- Liste les fichiers dans `content/puzzles/` pour les dates déjà prises et, si besoin, le détail des entrées non encore reflétées dans le fichier d’inventaire.
 
 ### 2. Idéation (Brainstorming)
 - Propose 3 à 5 idées de personnalités publiques connues (acteurs, sportifs, journalistes, animateurs, chanteurs, politiques, etc.).

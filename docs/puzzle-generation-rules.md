@@ -1,6 +1,6 @@
 # Génération devinette « personnalité publique connue / jeu de mots »
 
-> Source pour les automations Cursor et `.cursor/rules/puzzle-generation.mdc`. Consulter ce fichier pour toutes les contraintes de génération.
+> Source pour les automations Cursor et `.cursor/rules/puzzle-generation.mdc`. Consulter ce fichier pour toutes les contraintes de génération. **Inventaire des devinettes déjà publiées** : `docs/devinettes-deja-publiees.md` (à lire avant toute création, à mettre à jour après chaque ajout).
 
 ## Contenu
 
@@ -14,7 +14,7 @@ Sur une **série de devinettes** (semaine, mois), **varier les « sources »** d
 - **Domaines** : alterner **acteurs et actrices**, **chanteuses et chanteurs**, **journalistes** et **présentateurs / présentatrices** (télé, radio, presse), **sportives et sportifs**, **personnalités politiques** (jeu léger, non diffamatoire, même cadre légal qu’ailleurs), **figures de la pop culture** (télé, réseaux, jeux vidéo, mèmes durables), **auteurs / intellectuels** connus du grand public, etc.
 - **Époques** : mélanger **générations** — figures **classiques** ou associées à une époque passée, et figures **très actuelles**.
 - **Nationalités et horizons** : ne pas tout centrer sur une seule scène nationale ; inclure des personnalités **internationales** lorsque le public francophone peut raisonnablement **reconnaître** la figure ou résoudre le jeu de mots.
-- **Suivi** : avant de figer une idée, **parcourir les puzzles récents** dans `content/puzzles/` pour limiter les **répétitions** du même type (ex. trois acteurs français d’affilée) ou du même registre.
+- **Suivi** : avant de figer une idée, lire **`docs/devinettes-deja-publiees.md`** (inventaire des devinettes déjà livrées) et **ne pas refaire** une ligne déjà présente (même personnalité + même déformation / mêmes réponses normalisées). Compléter ce fichier à chaque nouvelle publication. Recouper avec **`content/puzzles/`** pour les dates occupées et limiter aussi les **répétitions** de registre (ex. trois acteurs français d’affilée).
 
 ## Créativité : élargir les possibilités (sans perdre la cohérence)
 
