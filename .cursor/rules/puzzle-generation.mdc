@@ -51,7 +51,7 @@ Le jeu de mot repose sur une **modification du nom de famille** de la **personna
 
 **Traductions du patronyme (à éviter)** : ne pas remplacer le patronyme par la **traduction française du sens** (souvent depuis l’anglais) — ce n’est pas un homophone sur la **prononciation**. Voir **bons / mauvais exemples** dans `docs/puzzle-generation-rules.md` (ex. bon : **Céline Dion → Céline d’ion** ; à éviter : **Brad Fosse**, **Emma Pierres**, **Will Forgeron**).
 
-**Découpage sans déformation phonétique (à éviter)** : éviter les réponses qui **répètent le son du patronyme** sans le **transformer** en un autre mot (ex. **Dupont** → *du pont*, **Dujardin** → *du jardin*) — **hors format**. Détail : `docs/puzzle-generation-rules.md` § *Découpage « mot à mot » sans déformation phonétique*.
+**Découpage sans déformation phonétique (à éviter)** : éviter les réponses qui **répètent le son du patronyme** sans le **transformer** en un autre mot (ex. **Dupont** → *du pont*, **Dujardin** → *du jardin*) — **hors format**. Même logique pour **resegmentations** type **Lamy** → *la mie* (article + mot, pas mutation du patronyme). Éviter les **collages** sur patronymes étrangers **sans chute** (ex. **Chris prête** pour *Pratt* : pas d’expression identifiable). Détail : `docs/puzzle-generation-rules.md` § *Découpage*, *Resegmentations*, *Quasi-homonyme collage sans chute*.
 
 **À éviter :**
 
@@ -61,6 +61,8 @@ Le jeu de mot repose sur une **modification du nom de famille** de la **personna
 - **Will Smith → Will Forgeron** : jeu sur le **sens** du mot anglais *smith* (forgeron) avec une réponse en français, sans **déformation homophone** du patronyme (le nom *Smith* ne devient pas un autre mot sonore en français) — **hors format** ; voir `docs/puzzle-generation-rules.md`.
 - **Brad Pitt → Brad Fosse** : traduction du sens *pit* — **hors format**.
 - **Emma Stone → Emma Pierres** : traduction du sens *stone* — **hors format**.
+- **Alexandra Lamy → Alexandra la mie** : resegmentation *la + mie*, **pas** une déformation phonétique du patronyme — **hors format** (comme Dupont / Dujardin).
+- **Chris Pratt → Chris prête** : quasi-homonyme **sans chute** ; la réponse ne forme **pas** une expression ou image stable — **hors format**.
 
 ### Aucun texte
 

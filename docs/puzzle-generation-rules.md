@@ -88,6 +88,10 @@ Le jeu de mot repose sur une **modification du nom de famille** de la **personna
 
 **Découpage « mot à mot » sans déformation phonétique (à éviter)** : ne pas se contenter de **recoller des mots français** qui **répètent le même son** que le patronyme **sans le transformer** en un autre mot ou quasi-homophone distinct. Si la « réponse » est seulement le patronyme **éclaté en syllabes** (ex. *Dupont* → *du pont*, même prononciation globale), le **nom de famille n’est pas modifié** au sens du jeu — **hors format**. Même logique que pour **Dujardin** → *du jardin* : le son du nom reste celui du nom d’origine, ce n’est pas une **déformation créative** du type *Lindon* → *dindon*, *Plaza* → *pizza*.
 
+**Resegmentations « article / préposition + mot » (à éviter)** : quand le patronyme, lu ou prononcé à la française, **tombe exactement** sur une **suite déjà française** (article + substantif, etc.) **sans** que le **lexème patronymique** ne devienne un **autre mot distinct** par déformation — **hors format**. Ce n’est pas « le nom se transforme en X », c’est « on **découpe** le nom pour entendre des mots du dictionnaire ». Ex. **Alexandra Lamy → Alexandra la mie** : *Lamy* [lami] s’entend comme *la mie* ; la chaîne sonore globale reste celle du nom de famille alignée sur des morceaux de français, **pas** une **mutation** du type *Lindon* → *dindon* ou *Foresti* → *forêt si* (où le patronyme devient une autre unité lexicale reconnaissable). À classer avec *Dupont* / *Dujardin*, pas avec les bons calembours.
+
+**Quasi-homonyme « collage » sans chute (à éviter, souvent patronymes non français)** : choisir un mot français **uniquement** parce qu’il **rapproche** phonétiquement un patronyme **sans** que la **forme obtenue** (prénom + mot) constitue une **expression**, une **image mentale stable** ou un **renommage plaisant** que le joueur peut **reformuler** (« on a dit X à la place du nom, et ça veut dire / évoque Y »). Si la réponse **ne veut rien dire** en français au-delà du rapprochement forcé — **hors format**. Ex. **Chris Pratt → Chris prête** : *Pratt* [pʁat] vs *prête* [pʁɛt] reste un **pont faible** ; surtout **« Chris prête »** n’est **pas** une locution ni une chute partageable (contrairement à *Michel Sardine*, *Johnny Holiday*, *Stéphane Pizza*). *Test utile* : si tu ne peux pas compléter naturellement « la blague, c’est qu’on entend … à la place du nom, et du coup … », l’idée est probablement trop creuse.
+
 **Bon exemple (homophone, pas traduction)** : **Céline Dion → Céline d’ion** — jeu sur le **son** *Dion* / *d’ion*, pas sur le sens d’un mot à traduire.
 
 **À éviter :**
@@ -99,6 +103,8 @@ Le jeu de mot repose sur une **modification du nom de famille** de la **personna
 - **Will Smith → Will Forgeron** : jeu sur le **sens** du mot anglais *smith* (forgeron) avec une « réponse » en français, sans **déformation homophone** du patronyme comme dans les bons exemples (le nom *Smith* ne devient pas un autre mot sonore en français) — **hors format**.
 - **Brad Pitt → Brad Fosse** : **traduction** du sens anglais *pit* (« fosse ») — **hors format** (pas d’homophone sur *Pitt* tel qu’on le prononce).
 - **Emma Stone → Emma Pierres** : **traduction** du sens anglais *stone* (« pierres ») — **hors format** (même problème).
+- **Alexandra Lamy → Alexandra la mie** : **resegmentation** du patronyme en *la + mie* — **pas** une déformation du nom en **un autre mot** ; même famille que *Dupont* / *Dujardin* (voir § *Resegmentations « article / préposition + mot »*).
+- **Chris Pratt → Chris prête** : **collage quasi-homonyme** sur patronyme anglophone **sans chute** : « Chris prête » **n’établit pas** une expression ou une image stable ; le joueur n’a pas de **renommage** ludique clair — **hors format** (voir § *Quasi-homonyme « collage » sans chute*).
 
 ### Aucun texte
 
