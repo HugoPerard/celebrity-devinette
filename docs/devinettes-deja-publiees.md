@@ -58,3 +58,5 @@ Liste de référence pour les agents et contributeurs : **toute nouvelle idée n
 | 2026-04-11 | Tony Parker               | tony parquet                              |
 | 2026-04-12 | Julien Doré               | julien adore                              |
 | 2026-04-13 | Eddy Mitchell             | eddy michelin                             |
+| 2026-04-14 | Madonna                   | madonna madonne                           |
+| 2026-04-15 | Freddie Mercury           | freddie mercure                           |
