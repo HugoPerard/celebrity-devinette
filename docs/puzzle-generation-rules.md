@@ -7,6 +7,16 @@
 - **Pas** de contenu haineux, diffamatoire (respecter le cadre légal / éthique du produit).
 - La devinette repose sur un **jeu de mots** (nom modifié) et une **scène concrète** qui illustre ce sens ; la figure doit **évoquer clairement** la personnalité publique (voir **Ressemblance** ci-dessous), sans être une photo de presse.
 
+## Seuil de notoriété (avant toute génération)
+
+**Obligatoire** : avant de retenir une personnalité et d’en générer l’image, estimer le **pourcentage de notoriété** = la probabilité (sur une personne **lambda**, adulte, francophone, sans niche spécialisée) qu’elle **connaisse** la personnalité — au moins de **nom** ou **de réputation** (pas besoin d’en être fan).
+
+- **Cible** : idéalement **≥ 50 %** (au moins **une personne sur deux** dans ce public de référence aurait entendu parler d’elle dans un contexte **grand public** : médias, sport, ciné, musique, politique, etc.).
+- **Si l’estimation est &lt; 50 %** : **ne pas valider** cette idée — en choisir **une autre** (même si le jeu de mots est brillant) ou itérer sur d’autres noms.
+- **Comment estimer (heuristique)** : rayonnement **médiatique récent ou durable**, présence en **tête d’affiche** ou rôle d’arbitre du débat (animateurs, politiques, sportifs phares), **traînée** dans la culture pop partagée — pas le seul ressenti personnel ni une sous-culture. En cas d’hésitation, **favoriser** une figure clairement plus reconnue.
+
+Cette étape s’inscrit **après** le filtre « jeu de mots valide » / inventaire, et **avant** la génération d’image et la finalisation des fichiers.
+
 ## Diversité des figures
 
 Sur une **série de devinettes** (semaine, mois), **varier les « sources »** de **personnalités publiques connues** pour éviter l’uniformité — pas seulement des « stars » au sens étroit du terme.

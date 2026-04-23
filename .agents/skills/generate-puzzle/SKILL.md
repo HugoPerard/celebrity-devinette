@@ -17,7 +17,14 @@ Utilise ce skill quand l'utilisateur demande de "générer une devinette", "cré
 - **Règle d'or du jeu de mots** : le patronyme doit **muter** en **un autre mot** (lexème distinct), pas seulement se **réécrire** en français avec le **même son** qu’à l’oral (ex. **Chris Rock → Chris Roc** : *rock* / *roc* homophones — **interdit**, voir `docs/puzzle-generation-rules.md` § *Homophonie sans mutation du patronyme*). Viser des déformations du type *Lindon* → *dindon*, *Cruz* → *croute*, *Huppert* → *hyper*.
 - **INTERDIT** : Ne traduis JAMAIS le sens d'un nom anglais en français (ex: Brad Pitt -> Brad Fosse est INTERDIT).
 - Pour chaque idée, décris brièvement la scène visuelle et la réponse attendue.
-- Présente ces idées à l'utilisateur et **attends sa validation** avant de générer l'image (sauf si l'utilisateur t'a donné carte blanche totale).
+
+### 2bis. Seuil de notoriété (avant de valider la génération)
+
+- Pour **chaque** personnalité retenue au moment de figer l’idée, estimer le **pourcentage de notoriété** : probabilité qu’une **personne adulte lambda**, francophone, **sans** expertise de niche, ait **déjà entendu parler** de cette personne (nom ou visage) dans un contexte **grand public**.
+- **Règle** : si l’estimation est **inférieure à 50 %**, **abandonner** ce choix et en proposer **un autre** (autre personnalité et/ou autre prise) — ne pas lancer la génération d’image tant que le seuil n’est pas atteint.
+- En **dessous** de 50 %, le jeu de mots n’est **pas** une excuse : le produit vise le **partage** et la **reconnaissance** pour le plus grand nombre. Voir `docs/puzzle-generation-rules.md` § *Seuil de notoriété*.
+
+- Présente les idées **validées** (jeu de mots + notoriété ≥ 50 %) à l’utilisateur et **attends sa validation** avant de générer l’image (sauf si l’utilisateur t’a donné **carte blanche** totale).
 
 ### 3. Génération de l'image
 - Utilise l'outil `GenerateImage`.

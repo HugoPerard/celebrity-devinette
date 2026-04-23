@@ -14,6 +14,8 @@ alwaysApply: false
 - La devinette doit être un **jeu de mots** avec indice visuel **concret** ; l’illustration stylisée doit **fortement évoquer** la personnalité publique (voir section ressemblance dans `docs/puzzle-generation-rules.md`), sans photo de presse ni rendu trompeur type deepfake.
 - **Langue** : indices et métadonnées en français, sauf exception documentée.
 
+**Notoriété (seuil 50 %)** : avant toute génération d’image, estimer le **% de personnes lambda** (public francophone large) qui **connaissent** la personnalité (au moins de nom) ; si l’estimation est **&lt; 50 %**, **ne pas retenir** la figure et en choisir une autre. Détail : `docs/puzzle-generation-rules.md` § *Seuil de notoriété*.
+
 ## Diversité des figures
 
 Sur une **série de devinettes** (semaine, mois), **varier les « sources »** de **personnalités publiques connues** pour éviter l’uniformité — pas seulement des « stars » au sens étroit.
